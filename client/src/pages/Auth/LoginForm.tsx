@@ -13,13 +13,7 @@ const LoginForm = ({ swapToRegister }: LoginFormProps) => {
   const [password, setPassword] = useState('');
   const [remeberMe, setRemeberMe] = useState(false);
 
-  const validateForm = () => {
-    console.log(username, password, remeberMe);
-
-    loginHandler();
-  };
-
-  const loginHandler = () => {
+  const handleLogin = () => {
     console.log('LOGIN');
   };
 
@@ -37,7 +31,7 @@ const LoginForm = ({ swapToRegister }: LoginFormProps) => {
         </button>
       </div>
 
-      <BasicButton label='Login' type='button' onClick={validateForm} />
+      <BasicButton label='Login' type='button' onClick={handleLogin} />
 
       <p className='text-center text-xs'>
         Don't have account?{' '}
