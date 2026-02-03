@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:root {
+  --error-clr: #ff4d4f;
+}
+
 *,
 *::before,
 *::after {

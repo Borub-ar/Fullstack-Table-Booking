@@ -10,7 +10,7 @@ const AuthWrapper = () => {
   };
 
   return (
-    <form className='flex-1 max-w-85 border-2 border-white rounded-md py-12 px-8 mx-5 backdrop-blur-xs'>
+    <form className='flex-1 max-w-100 border-2 border-white rounded-md py-12 px-8 mx-5 backdrop-blur-xs'>
       {isLoginMode && <LoginForm swapToRegister={swapAuthMode} />}
       {!isLoginMode && <RegistrationForm swapToLogin={swapAuthMode} />}
     </form>
