@@ -12,10 +12,7 @@ interface RegistrationFormProps {
 }
 
 interface ValidationErrors {
-  username?: string[];
-  email?: string[];
-  password?: string[];
-  confirmPassword?: string[];
+  [key: string]: string[];
 }
 
 const registrationSchema = z
