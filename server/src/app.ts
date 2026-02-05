@@ -5,7 +5,7 @@ import userRouter from './routes/users/users.router.js';
 
 const app = express();
 
-const whitelist = ['http://localhost'];
+const whitelist = ['http://localhost:5173'];
 const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin ?? '') !== -1 || !origin) {

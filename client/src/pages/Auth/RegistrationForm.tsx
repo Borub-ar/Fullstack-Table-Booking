@@ -1,9 +1,12 @@
 import { z } from 'zod';
 
 import { useState } from 'react';
+import useUser from '../../hooks/useUser';
 
 import BasicButton from '../../components/UI/BasicButton';
 import Input from '../../components/UI/Input';
+import LoadingOverlay from '../../components/UI/LoadingOverlay';
+import { is } from 'zod/locales';
 
 const PASSWORD_VALIDATION = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
 
@@ -36,10 +39,15 @@ const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
-  const handleRegistration = () => {
+  const { registerUser, isLoading, error, success, reset } = useUser();
+
+  const handleRegistration = async () => {
     const result = validateForm();
 
     if (!result) return;
+
+    const registrationResult = await registerUser({ username, email, password });
+    console.log(registrationResult);
   };
 
   const validateForm = () => {
@@ -55,47 +63,51 @@ const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
   };
 
   return (
-    <div className='flex flex-col gap-4 text-white'>
-      <h1 className='text-white font-medium text-2xl text-center mb-5'>register</h1>
+    <>
+      {isLoading && <LoadingOverlay />}
 
-      <Input
-        type='text'
-        inputId='username'
-        labelText='Username'
-        errors={validationErrors.username}
-        onChange={e => setUsername(e.target.value)}
-      />
-      <Input
-        type='text'
-        inputId='email'
-        labelText='Email'
-        errors={validationErrors.email}
-        onChange={e => setEmail(e.target.value)}
-      />
-      <Input
-        type='password'
-        inputId='password'
-        labelText='Password'
-        errors={validationErrors.password}
-        onChange={e => setPassword(e.target.value)}
-      />
-      <Input
-        type='password'
-        inputId='confirmPassword'
-        labelText='Confirm Password'
-        errors={validationErrors.confirmPassword}
-        onChange={e => setConfirmPassword(e.target.value)}
-      />
+      <div className='flex flex-col gap-4 text-white'>
+        <h1 className='text-white font-medium text-2xl text-center mb-5'>register</h1>
 
-      <BasicButton label='Register' type='button' onClick={handleRegistration} />
+        <Input
+          type='text'
+          inputId='username'
+          labelText='Username'
+          errors={validationErrors.username}
+          onChange={e => setUsername(e.target.value)}
+        />
+        <Input
+          type='text'
+          inputId='email'
+          labelText='Email'
+          errors={validationErrors.email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <Input
+          type='password'
+          inputId='password'
+          labelText='Password'
+          errors={validationErrors.password}
+          onChange={e => setPassword(e.target.value)}
+        />
+        <Input
+          type='password'
+          inputId='confirmPassword'
+          labelText='Confirm Password'
+          errors={validationErrors.confirmPassword}
+          onChange={e => setConfirmPassword(e.target.value)}
+        />
 
-      <p className='text-center text-xs'>
-        Already have an accout?{' '}
-        <button className='underline' type='button' onClick={swapToLogin}>
-          Login
-        </button>
-      </p>
-    </div>
+        <BasicButton label='Register' type='button' onClick={handleRegistration} />
+
+        <p className='text-center text-xs'>
+          Already have an accout?{' '}
+          <button className='underline' type='button' onClick={swapToLogin}>
+            Login
+          </button>
+        </p>
+      </div>
+    </>
   );
 };
 

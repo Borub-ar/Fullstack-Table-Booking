@@ -6,15 +6,19 @@ import type { CreateUserData } from '../types/user';
 
 const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
 
   const registerUser = async (userData: CreateUserData) => {
+    if (isLoading) return;
+
     setIsLoading(true);
+    setError('');
+    setSuccess('');
 
     const result = await httpRegisterUser(userData);
     if (result.success) {
-      setSuccess(true);
+      setSuccess(result.data.message);
     } else {
       setError(result.error || 'Registration failed');
     }
@@ -23,7 +27,12 @@ const useUser = () => {
     return result;
   };
 
-  return { registerUser, isLoading, error, success };
+  const reset = () => {
+    setError('');
+    setSuccess('');
+  };
+
+  return { registerUser, isLoading, error, success, reset };
 };
 
 export default useUser;
