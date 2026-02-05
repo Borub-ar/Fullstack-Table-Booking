@@ -5,7 +5,7 @@ interface CreateUserBody {
   username: string;
   password: string;
   email: string;
-};
+}
 
 const httpCreateNewUser = async (
   req: Request<Record<string, never>, Record<string, never>, CreateUserBody>,
