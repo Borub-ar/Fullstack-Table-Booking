@@ -1,14 +1,13 @@
-import { z } from 'zod';
-
 import { useState } from 'react';
 import useUser from '../../hooks/useUser';
+
+import { z } from 'zod';
+
+import { PASSWORD_VALIDATION } from '../../constants/constants';
 
 import BasicButton from '../../components/UI/BasicButton';
 import Input from '../../components/UI/Input';
 import LoadingOverlay from '../../components/UI/LoadingOverlay';
-import { is } from 'zod/locales';
-
-const PASSWORD_VALIDATION = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$/;
 
 interface RegistrationFormProps {
   swapToLogin: () => void;
