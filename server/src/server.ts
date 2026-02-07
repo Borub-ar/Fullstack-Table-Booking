@@ -1,11 +1,14 @@
 import http from 'http';
+
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+
+dotenv.config({ path: './src/.env' });
 
 import app from './app.js';
 
 const PORT = process.env.PORT || 8000;
-const MONGO_URL =
-  'mongodb+srv://Table-Reservation-API:FeDiFAVDBVoRFCqk@cluster0.oehttvl.mongodb.net/?appName=TableReservation';
+const MONGO_URL = process.env.MONGO_URL!;
 
 const server = http.createServer(app);
 

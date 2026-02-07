@@ -46,7 +46,6 @@ const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
     confirmPassword: '',
   });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
-
   const { registerUser, isLoading, error, success, reset } = useUser();
 
   const saveInputValues = (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
