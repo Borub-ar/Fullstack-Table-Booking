@@ -6,6 +6,7 @@ import Input from '../../components/UI/Input';
 
 interface LoginFormProps {
   swapToRegister: () => void;
+  showToast: (message: string, type: 'success' | 'error') => void;
 }
 
 const LoginForm = ({ swapToRegister }: LoginFormProps) => {

@@ -11,6 +11,7 @@ import { PASSWORD_VALIDATION } from '../../constants/constants';
 
 interface RegistrationFormProps {
   swapToLogin: () => void;
+  showToast: (message: string, type: 'success' | 'error') => void;
 }
 
 interface ValidationErrors {
@@ -38,7 +39,7 @@ const registrationSchema = z
     path: ['confirmPassword'],
   });
 
-const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
+const RegistrationForm = ({ swapToLogin, showToast }: RegistrationFormProps) => {
   const [formData, setFormData] = useState<FormData>({
     username: '',
     email: '',
@@ -46,7 +47,7 @@ const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
     confirmPassword: '',
   });
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
-  const { registerUser, isLoading, error, success, reset } = useUser();
+  const { registerUser, isLoading } = useUser();
 
   const saveInputValues = (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     const { value, dataset } = e.target;
@@ -77,13 +78,14 @@ const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
 
     if (!result) return;
 
-    await registerUser(formData);
+    const response = await registerUser(formData);
+    if (!response) return;
 
-    if (success) {
+    if (response.success) {
       swapToLogin();
-      reset();
+      showToast(response.data.message || 'Successfully registered', 'success');
     } else {
-      console.log(error);
+      showToast(response.error || 'Something went wrong', 'error');
     }
   };
 
@@ -130,9 +132,6 @@ const RegistrationForm = ({ swapToLogin }: RegistrationFormProps) => {
           errors={validationErrors.confirmPassword || []}
           onChange={saveInputValues}
         />
-
-        {error && <p className='text-red-500 text-center text-xs'>Something went wrong</p>}
-        {success && <p className='text-green-500 text-center text-xs'>Successfully registered</p>}
 
         <BasicButton label='Register' type='button' disabled={isLoading} onClick={handleRegistration} />
 
