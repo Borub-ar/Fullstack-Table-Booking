@@ -2,6 +2,7 @@ import express from 'express';
 import cors, { type CorsOptions } from 'cors';
 
 import userRouter from './routes/users/users.router.js';
+import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/users', userRouter);
+app.use(errorHandler);
 
 export default app;
