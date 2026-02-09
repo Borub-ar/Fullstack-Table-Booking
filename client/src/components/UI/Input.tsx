@@ -26,7 +26,7 @@ const Input = ({ labelText, inputId, type, value, dataType, errors, onChange }: 
       {errors &&
         hasErrors &&
         errors.map(error => (
-          <p key={error} className='text-(--error-clr) text-xs'>
+          <p key={error} className='text-(--error-clr) text-xs font-bold'>
             {error}
           </p>
         ))}

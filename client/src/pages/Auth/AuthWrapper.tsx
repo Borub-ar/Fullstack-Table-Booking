@@ -26,7 +26,7 @@ const AuthWrapper = () => {
     <>
       <ToastContainer />
 
-      <form className='flex-1 max-w-100 border-2 border-white rounded-md py-12 px-8 mx-5 backdrop-blur-xs'>
+      <form className='flex-1 max-w-100 border-2 border-white rounded-md py-12 px-8 mx-5 backdrop-blur-md'>
         {isLoginMode && <LoginForm swapToRegister={swapAuthMode} showToast={showToast} />}
         {!isLoginMode && <RegistrationForm swapToLogin={swapAuthMode} showToast={showToast} />}
       </form>
