@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useUser from '../../hooks/useUser';
 
 import { z } from 'zod';
-import { registrationSchema } from '../../schemas/registration.js';
+import { registrationSchema } from '../../../../shared/validation/registrationSchema.ts';
 
 import BasicButton from '../../components/UI/BasicButton';
 import Input from '../../components/UI/Input';
