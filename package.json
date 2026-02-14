@@ -23,6 +23,7 @@
     "concurrently": "^9.2.1"
   },
   "dependencies": {
+    "nodemailer": "^8.0.1",
     "zod": "^4.3.6"
   }
 }

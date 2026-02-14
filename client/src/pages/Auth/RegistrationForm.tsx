@@ -77,9 +77,10 @@ const RegistrationForm = ({ swapToLogin, showToast }: RegistrationFormProps) => 
       swapToLogin();
       return;
     }
-
-    if (response.fields.includes('email')) setEmailExternalError(true);
-    if (response.fields.includes('username')) setUsernameExternalError(true);
+    if (response?.fields) {
+      if (response.fields.includes('email')) setEmailExternalError(true);
+      if (response.fields.includes('username')) setUsernameExternalError(true);
+    }
   };
 
   return (

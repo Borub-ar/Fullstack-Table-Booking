@@ -9,5 +9,5 @@ export const errorHandler = (error: Error, req: Request, res: Response, next: Ne
       .json({ message: error.message, fields: error.fields, errorCode: error.errorCode, success: false });
   }
 
-  return res.status(500).json({ message: 'Something went wrong', success: false });
+  return res.status(500).json({ message: error.message || 'Something went wrong', success: false });
 };

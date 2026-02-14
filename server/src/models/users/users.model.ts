@@ -6,6 +6,7 @@ import AppError from '../../AppError.js';
 import type { CreateUserDto } from '../../types/user.js';
 import { registrationSchema } from '../../../../shared/validation/registrationSchema.js';
 import { generateVerificationToken } from '../../utils/generateVerificationToken.js';
+import { sendVerificationEmail } from '../../services/email.service.js';
 
 import { USER_ALREADY_EXISTS, USER_INVALID_DATA } from '../../constants/errorCodes.js';
 
@@ -19,17 +20,23 @@ const createUser = async (userData: CreateUserDto) => {
     await checkIfEmailExists(userData);
 
     const passwordHash = await bcrypt.hash(userData.password, SALT_ROUNDS);
+    const verificationToken = generateVerificationToken();
+    const verificationTokenExpiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
     const userToCreate = {
       username: userData.username,
       email: userData.email,
       passwordHash,
-      verificationToken: generateVerificationToken(),
+      verificationToken,
+      verificationTokenExpiresAt,
       userId: crypto.randomUUID(),
     };
 
     const newUser = new User(userToCreate);
-    return await newUser.save();
+    await newUser.save();
+
+
+    await sendVerificationEmail(verificationToken, userData.email);
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new Error('Something went wrong while creating user');
