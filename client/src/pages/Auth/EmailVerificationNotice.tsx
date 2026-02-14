@@ -1,11 +1,15 @@
 import BasicButton from '../../components/UI/BasicButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Navigate } from 'react-router-dom';
 
 import useUser from '../../hooks/useUser';
 
 const EmailVerificationNotice = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { sendVerificationEmail, isLoading } = useUser();
+
+  const email = location.state?.email;
+  if (!email) return <Navigate to='/auth/login' replace />;
 
   const handleResendEmail = async () => {
     const response = await sendVerificationEmail(email);

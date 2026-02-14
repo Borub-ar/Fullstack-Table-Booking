@@ -75,9 +75,12 @@ const RegistrationForm = () => {
     showToast(response.message, response.success ? 'success' : 'error');
 
     if (response.success) {
-      navigate('/auth/verify-email');
+      navigate('/auth/verify-email', {
+        state: { email: formData.email },
+      });
       return;
     }
+
     if (response?.fields) {
       if (response.fields.includes('email')) setEmailExternalError(true);
       if (response.fields.includes('username')) setUsernameExternalError(true);
