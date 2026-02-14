@@ -8,9 +8,10 @@ import { registrationSchema } from '../../../../shared/validation/registrationSc
 import { generateVerificationToken } from '../../utils/generateVerificationToken.js';
 import { sendVerificationEmailService } from '../../services/email.service.js';
 
-import { USER_ALREADY_EXISTS, USER_INVALID_DATA } from '../../constants/errorCodes.js';
+import { USER_ALREADY_EXISTS, USER_INVALID_DATA, USER_NOT_FOUND } from '../../constants/errorCodes.js';
 
 const SALT_ROUNDS = 10;
+const VERIFICATION_TOKEN_EXPIRES_IN = 1000 * 60 * 60 * 24;
 
 const createUser = async (userData: CreateUserDto) => {
   try {
@@ -20,7 +21,7 @@ const createUser = async (userData: CreateUserDto) => {
 
     const passwordHash = await bcrypt.hash(userData.password, SALT_ROUNDS);
     const verificationToken = generateVerificationToken();
-    const verificationTokenExpiresAt = new Date(Date.now() + 1000 * 60 * 60 * 24);
+    const verificationTokenExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_IN);
 
     const userToCreate = {
       username: userData.username,
@@ -63,7 +64,17 @@ const checkIfEmailExists = async (userData: CreateUserDto) => {
 };
 
 const sendVerificationEmail = async (email: string) => {
-  
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new AppError(USER_NOT_FOUND, 'User with this email does not exist', 400);
+  }
+
+  user.verificationToken = generateVerificationToken();
+  user.verificationTokenExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_IN);
+  await user.save();
+
+  await sendVerificationEmailService(user.verificationToken, email);
 };
 
 export { createUser, sendVerificationEmail };
