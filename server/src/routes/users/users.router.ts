@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { createUserHandler } from './users.controller.js';
+import { createUserHandler, sendVerificationEmailHandler } from './users.controller.js';
 
 const userRouter = Router();
 
-userRouter.post('/', createUserHandler);
+userRouter.post('/create', createUserHandler);
+userRouter.post('/send-verification-email', sendVerificationEmailHandler);
 
 export default userRouter;

@@ -6,7 +6,7 @@ import AppError from '../../AppError.js';
 import type { CreateUserDto } from '../../types/user.js';
 import { registrationSchema } from '../../../../shared/validation/registrationSchema.js';
 import { generateVerificationToken } from '../../utils/generateVerificationToken.js';
-import { sendVerificationEmail } from '../../services/email.service.js';
+import { sendVerificationEmailService } from '../../services/email.service.js';
 
 import { USER_ALREADY_EXISTS, USER_INVALID_DATA } from '../../constants/errorCodes.js';
 
@@ -15,7 +15,6 @@ const SALT_ROUNDS = 10;
 const createUser = async (userData: CreateUserDto) => {
   try {
     validateRegistrationData(userData);
-
     await checkIfUserExists(userData);
     await checkIfEmailExists(userData);
 
@@ -35,8 +34,7 @@ const createUser = async (userData: CreateUserDto) => {
     const newUser = new User(userToCreate);
     await newUser.save();
 
-
-    await sendVerificationEmail(verificationToken, userData.email);
+    await sendVerificationEmailService(verificationToken, userData.email);
   } catch (error) {
     if (error instanceof AppError) throw error;
     throw new Error('Something went wrong while creating user');
@@ -64,4 +62,8 @@ const checkIfEmailExists = async (userData: CreateUserDto) => {
   }
 };
 
-export { createUser };
+const sendVerificationEmail = async (email: string) => {
+  
+};
+
+export { createUser, sendVerificationEmail };

@@ -10,7 +10,7 @@ interface RegisterUserData {
 
 export const httpRegisterUser = async (userData: RegisterUserData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/users`, userData);
+    const response = await axios.post(`${API_BASE_URL}/users/create`, userData);
     return response.data;
   } catch (error) {
     return (error as AxiosError).response?.data;

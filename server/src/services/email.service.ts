@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-export const sendVerificationEmail = async (token: string, email: string) => {
+export const sendVerificationEmailService = async (token: string, email: string) => {
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -16,6 +16,8 @@ export const sendVerificationEmail = async (token: string, email: string) => {
       subject: 'Verify your email',
       html: `Click here to verify your email: <a href="http://localhost:3000/verify-email?token=${token}">Verify</a>`,
     };
+
+    const info = await transporter.sendMail(emailOptions);
   } catch (error) {
     console.error('Failed to send verification email:', error);
     throw new Error('Failed to send verification email');
