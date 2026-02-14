@@ -5,6 +5,7 @@ import AppError from '../../AppError.js';
 
 import type { CreateUserDto } from '../../types/user.js';
 import { registrationSchema } from '../../../../shared/validation/registrationSchema.js';
+import { generateVerificationToken } from '../../utils/generateVerificationToken.js';
 
 import { USER_ALREADY_EXISTS, USER_INVALID_DATA } from '../../constants/errorCodes.js';
 
@@ -23,6 +24,7 @@ const createUser = async (userData: CreateUserDto) => {
       username: userData.username,
       email: userData.email,
       passwordHash,
+      verificationToken: generateVerificationToken(),
       userId: crypto.randomUUID(),
     };
 
