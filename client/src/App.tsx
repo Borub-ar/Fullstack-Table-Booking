@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
-import Signup from './pages/Auth/index';
 import AuthWrapper from './pages/Auth/AuthWrapper';
 import EmailVerificationNotice from './pages/Auth/EmailVerificationNotice';
+import EmailVerificationResult from './pages/Auth/EmailVerificationResult';
 import LoginForm from './pages/Auth/LoginForm';
 import RegistrationForm from './pages/Auth/RegistrationForm';
+import Signup from './pages/Auth/index';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path='register' element={<RegistrationForm />} />
             <Route path='login' element={<LoginForm />} />
             <Route path='verify-email' element={<EmailVerificationNotice />} />
+            <Route path='verify-emai-result' element={<EmailVerificationResult />} />
           </Route>
         </Route>
 

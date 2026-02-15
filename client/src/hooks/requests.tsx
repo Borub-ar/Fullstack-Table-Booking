@@ -25,3 +25,12 @@ export const httpSendVerificationEmail = async (email: string) => {
     return (error as AxiosError).response?.data;
   }
 };
+
+export const httpVerifyEmail = async (token: string) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/users/verify-email/${token}`);
+    return response.data;
+  } catch (error) {
+    return (error as AxiosError).response?.data;
+  }
+};
