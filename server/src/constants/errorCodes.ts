@@ -18,11 +18,6 @@ export const INVALID_DATA = {
   message: 'Invalid data',
 };
 
-export const EMAIL_SENT_IF_EXISTS = {
-  errorCode: 200,
-  message: 'If email exists, we have sent you a verification email',
-};
-
 export const INVALID_TOKEN = {
   errorCode: 400,
   message: 'Something went wrong, please request a new verification email',

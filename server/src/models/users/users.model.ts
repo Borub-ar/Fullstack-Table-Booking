@@ -11,7 +11,6 @@ import { sendVerificationEmailService } from '../../services/email.service.js';
 
 import {
   EMAIL_ALREADY_TAKEN,
-  EMAIL_SENT_IF_EXISTS,
   INVALID_DATA,
   USERNAME_ALREADY_TAKEN,
   INVALID_TOKEN,
@@ -43,6 +42,7 @@ const createUser = async (userData: CreateUserDto) => {
     await newUser.save();
 
     await sendVerificationEmailService(verificationToken, userData.email);
+    return { success: true, message: 'User created successfully' };
   } catch (error) {
     console.error('Error creating user:', error);
     if (error instanceof AppError) throw error;
@@ -74,9 +74,10 @@ const checkIfEmailExists = async (userData: CreateUserDto) => {
 const sendVerificationEmail = async (email: string) => {
   try {
     const user = await User.findOne({ email });
+    const successMessage = 'If email exists, we have sent you a verification email';
 
     if (!user) {
-      throw new AppError(EMAIL_SENT_IF_EXISTS.errorCode, EMAIL_SENT_IF_EXISTS.message, 200);
+      return { success: true, message: successMessage };
     }
 
     const verificationToken = generateVerificationToken();
@@ -85,7 +86,8 @@ const sendVerificationEmail = async (email: string) => {
     user.verificationTokenExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_IN);
 
     await user.save();
-    return await sendVerificationEmailService(verificationToken, email);
+    await sendVerificationEmailService(verificationToken, email);
+    return { success: true, message: successMessage };
   } catch (error) {
     console.error('Error sending verification email:', error);
     if (error instanceof AppError) throw error;
@@ -109,6 +111,7 @@ const verifyEmail = async (token: string) => {
     user.verificationToken = null;
     user.verificationTokenExpiresAt = null;
     await user.save();
+    return { success: true, message: 'Email verified successfully!' };
   } catch (error) {
     console.error('Error verifying email:', error);
     if (error instanceof AppError) throw error;

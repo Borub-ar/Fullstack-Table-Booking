@@ -33,7 +33,7 @@ const EmailVerificationNotice = () => {
 
         <BasicButton label='Resend Email' onClick={handleResendEmail} />
 
-        <button className='ext-center underline cursor-pointer' type='button' onClick={() => navigate('/auth/login')}>
+        <button className='text-center underline cursor-pointer' type='button' onClick={() => navigate('/auth/login')}>
           Login
         </button>
       </div>

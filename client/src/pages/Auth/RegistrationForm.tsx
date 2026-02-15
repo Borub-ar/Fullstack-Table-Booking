@@ -137,7 +137,7 @@ const RegistrationForm = () => {
 
         <p className='text-center text-xs'>
           Already have an account?{' '}
-          <button className='underline' onClick={() => navigate('/auth/login')}>
+          <button className='underline' type='button' onClick={() => navigate('/auth/login')}>
             Login
           </button>
         </p>

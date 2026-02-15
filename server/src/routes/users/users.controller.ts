@@ -9,14 +9,14 @@ import { createUser, sendVerificationEmail, verifyEmail } from '../../models/use
 
 export const createUserHandler = tryCatch(async (req: Request, res: Response) => {
   const { username, password, email } = req.body;
-  await createUser({ username, password, email });
-  return res.status(201).json({ success: true, message: 'User created successfully' });
+  const result = await createUser({ username, password, email });
+  return res.status(201).json(result);
 });
 
 export const sendVerificationEmailHandler = tryCatch(async (req: Request, res: Response) => {
   const { email } = req.body;
-  await sendVerificationEmail(email);
-  return res.status(200).json({ success: true, message: 'Verification email sent successfully' });
+  const response = await sendVerificationEmail(email);
+  return res.status(200).json(response);
 });
 
 export const verifyEmailHandler = tryCatch(async (req: Request, res: Response) => {
@@ -25,6 +25,6 @@ export const verifyEmailHandler = tryCatch(async (req: Request, res: Response) =
 
   if (!token) throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
 
-  await verifyEmail(token);
-  return res.status(200).json({ success: true, message: 'Email verified successfully!' });
+  const response = await verifyEmail(token);
+  return res.status(200).json(response);
 });

@@ -13,6 +13,8 @@ const EmailVerificationResult = () => {
   const navigate = useNavigate();
 
   const [resultLabel, setResultLabel] = useState(VERIFYING_EMAIL_LABEL);
+  const [showNewVerificationEmailButton, setShowNewVerificationEmailButton] = useState(false);
+
   const verifiedTokenRef = useRef<string | null>(null);
 
   const [searchParams] = useSearchParams();
@@ -27,6 +29,13 @@ const EmailVerificationResult = () => {
     const verifyEmailFunction = async () => {
       const response = await verifyEmail(token);
 
+
+      if (!response) {
+        setResultLabel('Something went wrong, please request a new verification email');
+        return;
+      }
+
+      if (!response.success) setShowNewVerificationEmailButton(true);
       setResultLabel(response.message);
     };
 
@@ -36,14 +45,16 @@ const EmailVerificationResult = () => {
   const handleRequestNewVerificationEmail = async () => {
     console.log('request new verification email');
   };
-  
+
   return (
     <>
       {isLoading && <LoadingOverlay />}
 
       <div className='flex flex-col gap-4 text-white'>
         <h1 className='text-white font-medium text-2xl text-center mb-5'>{resultLabel}</h1>
-        <BasicButton label='Request new verification email' onClick={handleRequestNewVerificationEmail} />
+        {showNewVerificationEmailButton && (
+          <BasicButton label='Request new verification email' onClick={handleRequestNewVerificationEmail} />
+        )}
         <BasicButton label='Login' onClick={() => navigate('/auth/login')} />
       </div>
     </>
