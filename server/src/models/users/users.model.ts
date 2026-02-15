@@ -42,6 +42,7 @@ const createUser = async (userData: CreateUserDto) => {
     await newUser.save();
 
     await sendVerificationEmailService(verificationToken, userData.email);
+
     return { success: true, message: 'User created successfully' };
   } catch (error) {
     console.error('Error creating user:', error);
@@ -81,12 +82,12 @@ const sendVerificationEmail = async (email: string) => {
     }
 
     const verificationToken = generateVerificationToken();
-
     user.verificationToken = verificationToken;
     user.verificationTokenExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_IN);
 
     await user.save();
     await sendVerificationEmailService(verificationToken, email);
+
     return { success: true, message: successMessage };
   } catch (error) {
     console.error('Error sending verification email:', error);
@@ -95,28 +96,39 @@ const sendVerificationEmail = async (email: string) => {
   }
 };
 
-const verifyEmail = async (token: string) => {
+const verifyEmail = async (token?: string) => {
   try {
-    const user = await User.findOne({ verificationToken: token });
-
-    if (!user) {
-      throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
-    }
-
-    if (user.verificationTokenExpiresAt && user.verificationTokenExpiresAt < new Date()) {
-      throw new AppError(TOKEN_EXPIRED.errorCode, TOKEN_EXPIRED.message, 400);
-    }
+    const user = await getVerifiableUserByToken(token);
 
     user.isVerified = true;
     user.verificationToken = null;
     user.verificationTokenExpiresAt = null;
     await user.save();
+
     return { success: true, message: 'Email verified successfully!' };
   } catch (error) {
     console.error('Error verifying email:', error);
     if (error instanceof AppError) throw error;
     throw new Error('Something went wrong while verifying email');
   }
+};
+
+const getVerifiableUserByToken = async (token: string | undefined) => {
+  if (!token) {
+    throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
+  }
+
+  const user = await User.findOne({ verificationToken: token });
+
+  if (!user) {
+    throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
+  }
+
+  if (user.verificationTokenExpiresAt && user.verificationTokenExpiresAt < new Date()) {
+    throw new AppError(TOKEN_EXPIRED.errorCode, TOKEN_EXPIRED.message, 400);
+  }
+
+  return user;
 };
 
 export { createUser, sendVerificationEmail, verifyEmail };
