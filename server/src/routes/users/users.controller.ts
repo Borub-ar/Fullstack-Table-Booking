@@ -23,9 +23,7 @@ export const verifyEmailHandler = tryCatch(async (req: Request, res: Response) =
   const tokenParam = req.params.token;
   const token = Array.isArray(tokenParam) ? tokenParam[0] : tokenParam;
 
-  if (!token) {
-    throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
-  }
+  if (!token) throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
 
   await verifyEmail(token);
   return res.status(200).json({ success: true, message: 'Email verified successfully!' });
