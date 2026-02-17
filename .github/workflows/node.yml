@@ -12,18 +12,21 @@ jobs:
     strategy:
       matrix:
         node-version: [21.x, 22.x, 23.x, 24.x]
-        mongodb-version: [6.0.x, 7.0.x]
+        mongodb-version: ['6.0', '7.0']
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - name: Node.js version ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: MongoDB in GitHub Actions
         uses: supercharge/mongodb-github-action@1.12.1
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
+
       - run: npm run setup
       - run: npm run build
       - run: npm run test
