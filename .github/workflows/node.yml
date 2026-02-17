@@ -1,0 +1,19 @@
+name: Table Reservation App CI
+on:
+  push:
+    branches: [main]
+  pul_request:
+    branches: [main]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js version 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install
+      - run: npm install --prefix client
+      - run: npm install --prefix server
+      - run: npm run build
