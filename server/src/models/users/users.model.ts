@@ -104,14 +104,20 @@ const resendVerificationEmail = async (token: string) => {
       throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
     }
 
-    user.verificationToken = generateVerificationToken();
+    const verificationToken = generateVerificationToken();
+
+    user.verificationToken = verificationToken;
     user.verificationTokenExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_IN);
     await user.save();
 
-    await sendVerificationEmailService(user.verificationToken, user.email);
+    await sendVerificationEmailService(verificationToken, user.email);
 
     return { success: true, message: 'New verification email sent successfully' };
-  } catch (error) {}
+  } catch (error) {
+    console.error('Error resending verification email:', error);
+    if (error instanceof AppError) throw error;
+    throw new Error('Something went wrong while resending verification email');
+  }
 };
 
 const verifyEmail = async (token?: string) => {
