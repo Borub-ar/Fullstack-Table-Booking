@@ -99,6 +99,18 @@ const sendVerificationEmail = async (email: string) => {
 const resendVerificationEmail = async (token: string) => {
   try {
     const user = await User.findOne({ verificationToken: token });
+
+    if (!user) {
+      throw new AppError(INVALID_TOKEN.errorCode, INVALID_TOKEN.message, 400);
+    }
+
+    user.verificationToken = generateVerificationToken();
+    user.verificationTokenExpiresAt = new Date(Date.now() + VERIFICATION_TOKEN_EXPIRES_IN);
+    await user.save();
+
+    await sendVerificationEmailService(user.verificationToken, user.email);
+
+    return { success: true, message: 'New verification email sent successfully' };
   } catch (error) {}
 };
 

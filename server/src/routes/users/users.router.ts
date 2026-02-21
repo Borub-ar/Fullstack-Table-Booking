@@ -1,10 +1,17 @@
 import { Router } from 'express';
-import { createUserHandler, sendVerificationEmailHandler, verifyEmailHandler } from './users.controller.js';
+import {
+  createUserHandler,
+  resendVerificationEmailHandler,
+  sendVerificationEmailHandler,
+  verifyEmailHandler,
+} from './users.controller.js';
 
 const userRouter = Router();
 
+userRouter.get('/verify-email/:token', verifyEmailHandler);
+
 userRouter.post('/create', createUserHandler);
 userRouter.post('/send-verification-email', sendVerificationEmailHandler);
-userRouter.get('/verify-email/:token', verifyEmailHandler);
+userRouter.post('/resend-verification-email', resendVerificationEmailHandler);
 
 export default userRouter;
