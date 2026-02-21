@@ -96,6 +96,12 @@ const sendVerificationEmail = async (email: string) => {
   }
 };
 
+const resendVerificationEmail = async (token: string) => {
+  try {
+    const user = await User.findOne({ verificationToken: token });
+  } catch (error) {}
+};
+
 const verifyEmail = async (token?: string) => {
   try {
     const user = await getVerifiableUserByToken(token);
@@ -131,4 +137,4 @@ const getVerifiableUserByToken = async (token: string | undefined) => {
   return user;
 };
 
-export { createUser, sendVerificationEmail, verifyEmail };
+export { createUser, sendVerificationEmail, verifyEmail, resendVerificationEmail };

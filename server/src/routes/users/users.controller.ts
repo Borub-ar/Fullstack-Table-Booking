@@ -2,7 +2,12 @@ import type { Request, Response } from 'express';
 
 import { tryCatch } from '../../utils/tryCatch.js';
 
-import { createUser, sendVerificationEmail, verifyEmail } from '../../models/users/users.model.js';
+import {
+  createUser,
+  sendVerificationEmail,
+  verifyEmail,
+  resendVerificationEmail,
+} from '../../models/users/users.model.js';
 
 export const createUserHandler = tryCatch(async (req: Request, res: Response) => {
   const { username, password, email } = req.body;
@@ -13,6 +18,12 @@ export const createUserHandler = tryCatch(async (req: Request, res: Response) =>
 export const sendVerificationEmailHandler = tryCatch(async (req: Request, res: Response) => {
   const { email } = req.body;
   const response = await sendVerificationEmail(email);
+  return res.status(200).json(response);
+});
+
+export const resendVerificationEmailHandler = tryCatch(async (req: Request, res: Response) => {
+  const { token } = req.body;
+  const response = await resendVerificationEmail(token);
   return res.status(200).json(response);
 });
 
