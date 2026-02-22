@@ -30,4 +30,5 @@ jobs:
       - run: npm run setup
       - run: npm run build
       - run: npm run audit
+      - run: npm run lint
       - run: npm run test

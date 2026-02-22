@@ -7,11 +7,13 @@
   "author": "Kacper Barabasz",
   "main": "server.ts",
   "scripts": {
-    "test": "jest",
+    "test": "vitest run --dir src",
+    "test:watch": "vitest --dir src",
     "watch": "nodemon --exec tsx src/server.ts",
     "dev": "tsx src/server.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server/src/server.js"
+    "start": "node dist/server/src/server.js",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -21,20 +23,23 @@
     "mongoose": "^9.1.5"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
-    "@types/jest": "^30.0.0",
     "@types/node": "^25.2.1",
     "@types/nodemailer": "^7.0.9",
     "@types/supertest": "^6.0.3",
-    "jest": "^30.2.0",
+    "eslint": "^10.0.1",
+    "globals": "^17.3.0",
+    "jiti": "^2.6.1",
     "nodemon": "^3.1.11",
     "supertest": "^7.2.2",
-    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.56.0",
+    "vitest": "^4.0.18"
   },
   "ts-node": {
     "esm": true,
