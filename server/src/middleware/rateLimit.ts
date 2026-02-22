@@ -17,7 +17,7 @@ export const appLimiter = rateLimit({
 
 export const registrationLimiter = rateLimit({
   windowMs: WINDOW_MS,
-  limit: 1,
+  limit: 10,
   standardHeaders: true,
   handler: jsonLimiterHandler,
 });
