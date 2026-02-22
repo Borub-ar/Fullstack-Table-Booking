@@ -1,6 +1,12 @@
 import { useState } from 'react';
 
-import { httpRegisterUser, httpResendVerificationEmail, httpSendVerificationEmail, httpVerifyEmail } from './requests';
+import {
+  httpLoginUser,
+  httpRegisterUser,
+  httpResendVerificationEmail,
+  httpSendVerificationEmail,
+  httpVerifyEmail,
+} from './requests';
 
 import type { CreateUserData } from '../types/user';
 
@@ -43,7 +49,16 @@ const useUser = () => {
     return result;
   };
 
-  return { registerUser, sendVerificationEmail, verifyEmail, resendVerificationEmail, isLoading };
+  const loginUser = async (username: string, password: string) => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    const result = await httpLoginUser(username, password);
+    setIsLoading(false);
+    return result;
+  };
+
+  return { registerUser, sendVerificationEmail, verifyEmail, resendVerificationEmail, loginUser, isLoading };
 };
 
 export default useUser;

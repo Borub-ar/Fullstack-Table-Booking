@@ -43,3 +43,12 @@ export const httpResendVerificationEmail = async (token: string) => {
     return (error as AxiosError).response?.data;
   }
 };
+
+export const httpLoginUser = async (username: string, password: string) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/users/login`, { username, password });
+    return response.data;
+  } catch (error) {
+    return (error as AxiosError).response?.data;
+  }
+};
