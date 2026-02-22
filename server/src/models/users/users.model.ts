@@ -161,4 +161,24 @@ const getVerifiableUserByToken = async (token: string | undefined) => {
   return user;
 };
 
-export { createUser, sendVerificationEmail, verifyEmail, resendVerificationEmail };
+const loginUser = async (email: string, password: string) => {
+  console.log('LOGIN', { email, password });
+};
+
+const logoutUser = async () => {
+  console.log('LOGOUT');
+};
+
+const refreshSessionToken = async (token: string) => {
+  console.log('REFRESH SESSION TOKEN', { token });
+};
+
+export {
+  createUser,
+  sendVerificationEmail,
+  verifyEmail,
+  resendVerificationEmail,
+  loginUser,
+  logoutUser,
+  refreshSessionToken,
+};

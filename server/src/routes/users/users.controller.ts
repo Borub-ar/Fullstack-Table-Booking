@@ -33,3 +33,15 @@ export const verifyEmailHandler = tryCatch(async (req: Request, res: Response) =
   const response = await verifyEmail(token);
   return res.status(200).json(response);
 });
+
+export const loginUserHandler = tryCatch(async (req: Request, res: Response) => {
+  console.log('login');
+});
+
+export const logoutUserHandler = tryCatch(async (req: Request, res: Response) => {
+  console.log('logout');
+});
+
+export const refreshSessionTokenHandler = tryCatch(async (req: Request, res: Response) => {
+  console.log('refresh session token');
+});
