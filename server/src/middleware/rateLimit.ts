@@ -17,14 +17,14 @@ export const appLimiter = rateLimit({
 
 export const registrationLimiter = rateLimit({
   windowMs: WINDOW_MS,
-  limit: 10,
+  limit: 5,
   standardHeaders: true,
   handler: jsonLimiterHandler,
 });
 
 export const verificationLimiter = rateLimit({
   windowMs: WINDOW_MS,
-  limit: 10,
+  limit: 5,
   standardHeaders: true,
   handler: jsonLimiterHandler,
 });
