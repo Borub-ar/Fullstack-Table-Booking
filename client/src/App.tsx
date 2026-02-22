@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import AuthWrapper from './pages/Auth/AuthWrapper';
 import EmailVerificationNotice from './pages/Auth/EmailVerificationNotice';
@@ -6,6 +6,7 @@ import EmailVerificationResult from './pages/Auth/EmailVerificationResult';
 import LoginForm from './pages/Auth/LoginForm';
 import RegistrationForm from './pages/Auth/RegistrationForm';
 import Signup from './pages/Auth/index';
+import PageNotFound from './pages/Error/PageNotFound';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           </Route>
         </Route>
 
-        <Route path='/*' element={<Navigate to='/auth/login' replace />} />
+        <Route path='/*' element={<PageNotFound />} />
       </Routes>
     </Router>
   );
