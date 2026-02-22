@@ -2,7 +2,8 @@ import type { Request, Response, NextFunction } from 'express';
 
 import AppError from '../AppError.js';
 
-export const errorHandler = (error: Error, req: Request, res: Response, next: NextFunction) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const errorHandler = (error: Error, _req: Request, res: Response, _next: NextFunction) => {
   if (error instanceof AppError) {
     return res
       .status(error.statusCode)

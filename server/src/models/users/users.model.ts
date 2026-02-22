@@ -50,7 +50,7 @@ const createUser = async (userData: CreateUserDto) => {
   } catch (error) {
     console.error('Error creating user:', error);
     if (error instanceof AppError) throw error;
-    throw new Error('Something went wrong while creating user');
+    throw new Error('Something went wrong while creating user', { cause: error });
   }
 };
 
@@ -98,7 +98,7 @@ const sendVerificationEmail = async (email: string) => {
   } catch (error) {
     console.error('Error sending verification email:', error);
     if (error instanceof AppError) throw error;
-    throw new Error('Something went wrong while sending verification email');
+    throw new Error('Something went wrong while sending verification email', { cause: error });
   }
 };
 
@@ -122,7 +122,7 @@ const resendVerificationEmail = async (token: string) => {
   } catch (error) {
     console.error('Error resending verification email:', error);
     if (error instanceof AppError) throw error;
-    throw new Error('Something went wrong while resending verification email');
+    throw new Error('Something went wrong while resending verification email', { cause: error });
   }
 };
 
@@ -139,7 +139,7 @@ const verifyEmail = async (token?: string) => {
   } catch (error) {
     console.error('Error verifying email:', error);
     if (error instanceof AppError) throw error;
-    throw new Error('Something went wrong while verifying email');
+    throw new Error('Something went wrong while verifying email', { cause: error });
   }
 };
 
