@@ -1,5 +1,6 @@
-import signupBackground from '../../assets/images/auth-background.jpg';
 import { Outlet } from 'react-router-dom';
+
+import signupBackground from '../../assets/images/auth-background.jpg';
 
 const Signup = () => {
   return (

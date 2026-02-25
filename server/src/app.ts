@@ -1,9 +1,10 @@
-import express from 'express';
 import cors, { type CorsOptions } from 'cors';
+import express from 'express';
 
-import userRouter from './routes/users/users.router.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { appLimiter } from './middleware/rateLimit.js';
+
+import userRouter from './routes/users/users.router.js';
 
 const app = express();
 

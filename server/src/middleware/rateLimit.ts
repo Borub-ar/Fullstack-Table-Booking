@@ -1,5 +1,5 @@
-import { rateLimit } from 'express-rate-limit';
 import type { Request, Response } from 'express';
+import { rateLimit } from 'express-rate-limit';
 
 const MESSAGE = 'Too many requests, please try again later.';
 const WINDOW_MS = 15 * 60 * 1000;

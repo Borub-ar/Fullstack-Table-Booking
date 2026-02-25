@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
-import useUser from '../../hooks/useUser';
-
-import type { AuthOutletContext } from './AuthWrapper';
-
 import BasicButton from '../../components/UI/BasicButton';
 import Checkbox from '../../components/UI/Checkbox';
 import Input from '../../components/UI/Input';
 import LoadingOverlay from '../../components/UI/LoadingOverlay';
+
+import useUser from '../../hooks/useUser';
+import type { AuthOutletContext } from './AuthWrapper';
 
 const LoginForm = () => {
   const navigate = useNavigate();

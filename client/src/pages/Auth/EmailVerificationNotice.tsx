@@ -1,9 +1,10 @@
+import { useLocation, Navigate, useNavigate, useOutletContext } from 'react-router-dom';
+
 import BasicButton from '../../components/UI/BasicButton';
-import { useNavigate, useLocation, Navigate, useOutletContext } from 'react-router-dom';
+import LoadingOverlay from '../../components/UI/LoadingOverlay';
 
 import useUser from '../../hooks/useUser';
 
-import LoadingOverlay from '../../components/UI/LoadingOverlay';
 import type { AuthOutletContext } from './AuthWrapper';
 
 const EmailVerificationNotice = () => {

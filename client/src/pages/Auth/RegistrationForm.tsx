@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import useUser from '../../hooks/useUser';
-
 import { z } from 'zod';
-import { registrationSchema } from '../../../../shared/validation/registrationSchema.ts';
 
 import BasicButton from '../../components/UI/BasicButton';
 import Input from '../../components/UI/Input';
 import LoadingOverlay from '../../components/UI/LoadingOverlay';
+
+import useUser from '../../hooks/useUser';
+
+import { registrationSchema } from '../../../../shared/validation/registrationSchema';
+
 import type { AuthOutletContext } from './AuthWrapper';
 
 interface ValidationErrors {

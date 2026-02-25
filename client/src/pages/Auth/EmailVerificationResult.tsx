@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useOutletContext, useSearchParams } from 'react-router-dom';
 
+import BasicButton from '../../components/UI/BasicButton';
+import LoadingOverlay from '../../components/UI/LoadingOverlay';
+
 import useUser from '../../hooks/useUser';
 
-import LoadingOverlay from '../../components/UI/LoadingOverlay';
-import BasicButton from '../../components/UI/BasicButton';
 import type { AuthOutletContext } from './AuthWrapper';
 
 const VERIFYING_EMAIL_LABEL = 'Verifying your email...';

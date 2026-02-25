@@ -1,23 +1,22 @@
 import bcrypt from 'bcrypt';
 
-import User from './users.mongo.js';
 import AppError from '../../AppError.js';
-
-import type { CreateUserDto } from '../../types/user.js';
-import { registrationSchema } from '../../../../shared/validation/registrationSchema.js';
-
-import { generateVerificationToken } from '../../utils/generateVerificationToken.js';
-import { sendVerificationEmailService } from '../../services/email.service.js';
 
 import {
   EMAIL_ALREADY_TAKEN,
-  INVALID_DATA,
   INVALID_CREDENTIALS,
-  USERNAME_ALREADY_TAKEN,
+  INVALID_DATA,
   INVALID_TOKEN,
-  UNVERIFIED_ACCOUNT,
   TOKEN_EXPIRED,
+  UNVERIFIED_ACCOUNT,
+  USERNAME_ALREADY_TAKEN,
 } from '../../constants/errorCodes.js';
+
+import { sendVerificationEmailService } from '../../services/email.service.js';
+import type { CreateUserDto } from '../../types/user.js';
+import { generateVerificationToken } from '../../utils/generateVerificationToken.js';
+import User from './users.mongo.js';
+import { registrationSchema } from '../../../../shared/validation/registrationSchema.js';
 
 const SALT_ROUNDS = 10;
 const VERIFICATION_TOKEN_EXPIRES_IN = 1000 * 60 * 60 * 24;

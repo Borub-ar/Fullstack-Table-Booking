@@ -1,14 +1,14 @@
 import type { Request, Response } from 'express';
 
-import { tryCatch } from '../../utils/tryCatch.js';
-
 import {
   createUser,
+  loginUser,
+  resendVerificationEmail,
   sendVerificationEmail,
   verifyEmail,
-  resendVerificationEmail,
-  loginUser,
 } from '../../models/users/users.model.js';
+
+import { tryCatch } from '../../utils/tryCatch.js';
 
 export const createUserHandler = tryCatch(async (req: Request, res: Response) => {
   const { username, password, email } = req.body;

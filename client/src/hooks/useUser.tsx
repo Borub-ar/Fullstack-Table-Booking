@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import type { CreateUserData } from '../types/user';
+
 import {
   httpLoginUser,
   httpRegisterUser,
@@ -7,8 +9,6 @@ import {
   httpSendVerificationEmail,
   httpVerifyEmail,
 } from './requests';
-
-import type { CreateUserData } from '../types/user';
 
 const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);

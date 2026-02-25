@@ -1,20 +1,21 @@
 import { Router } from 'express';
-import {
-  createUserHandler,
-  resendVerificationEmailHandler,
-  sendVerificationEmailHandler,
-  verifyEmailHandler,
-  loginUserHandler,
-  logoutUserHandler,
-  refreshSessionTokenHandler,
-} from './users.controller.js';
 
 import {
+  loginLimiter,
   refreshSessionTokenLimiter,
   registrationLimiter,
   verificationLimiter,
-  loginLimiter,
 } from '../../middleware/rateLimit.js';
+
+import {
+  createUserHandler,
+  loginUserHandler,
+  logoutUserHandler,
+  refreshSessionTokenHandler,
+  resendVerificationEmailHandler,
+  sendVerificationEmailHandler,
+  verifyEmailHandler,
+} from './users.controller.js';
 
 const userRouter = Router();
 
