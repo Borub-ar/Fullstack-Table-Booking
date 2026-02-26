@@ -42,9 +42,9 @@ export const loginUserHandler = tryCatch(async (req: Request, res: Response) => 
 });
 
 export const logoutUserHandler = tryCatch(async (req: Request, res: Response) => {
-  console.log('logout');
+  console.log('logout', req, res);
 });
 
 export const refreshSessionTokenHandler = tryCatch(async (req: Request, res: Response) => {
-  console.log('refresh session token');
+  console.log('refresh session token', req, res);
 });
