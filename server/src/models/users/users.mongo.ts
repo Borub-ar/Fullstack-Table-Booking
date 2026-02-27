@@ -5,11 +5,9 @@ const userSchema = new mongoose.Schema({
   passwordHash: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   isVerified: { type: Boolean, default: false },
-  userId: { type: String, required: true, unique: true },
+  id: { type: String, required: true, unique: true },
   verificationToken: { type: String, default: null },
   verificationTokenExpiresAt: { type: Date, default: null },
-  refreshToken: { type: String },
-  id: {type: String, required: true}
 });
 
 const User = mongoose.model('User', userSchema);
