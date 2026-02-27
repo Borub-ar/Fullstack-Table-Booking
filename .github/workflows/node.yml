@@ -1,4 +1,4 @@
-name: Table Reservation App CI
+name: Table Booking App CI
 on:
   push:
     branches: [main]

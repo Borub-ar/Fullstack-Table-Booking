@@ -1,14 +1,14 @@
 {
-  "name": "table-reservation-app",
+  "name": "table-booking-app",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/Borub-ar/Fullstack-Table-Reservation-App#readme",
+  "homepage": "https://github.com/Borub-ar/Fullstack-Table-Booking-App#readme",
   "bugs": {
-    "url": "https://github.com/Borub-ar/Fullstack-Table-Reservation-App/issues"
+    "url": "https://github.com/Borub-ar/Fullstack-Table-Booking-App/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Borub-ar/Fullstack-Table-Reservation-App.git"
+    "url": "git+https://github.com/Borub-ar/Fullstack-Table-Booking-App.git"
   },
   "license": "ISC",
   "author": "",

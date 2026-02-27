@@ -67,7 +67,7 @@ const BookingSidebar = () => {
       <aside className='hidden md:flex w-64 bg-zinc-900/95 text-zinc-300 flex-col shrink-0 border-r border-zinc-800'>
         <div className='p-6 border-b border-zinc-800'>
           <Link to='/booking' className='text-xl font-semibold text-white tracking-tight'>
-            Table Reserve
+            Table Booking
           </Link>
         </div>
         <nav className='flex-1 py-4'>

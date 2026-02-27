@@ -1,4 +1,4 @@
-# Table Reserve
+# Table Booking
 
 Aplikacja pełnostackowa do rezerwacji stolików w restauracji. Użytkownicy mogą rejestrować konta, weryfikować e-mail, logować się oraz przeglądać i tworzyć rezerwacje.
 
@@ -63,8 +63,8 @@ Aplikacja pełnostackowa do rezerwacji stolików w restauracji. Użytkownicy mog
 ### 1. Klonowanie i instalacja zależności
 
 ```bash
-git clone https://github.com/Borub-ar/Fullstack-Table-Reservation-App.git
-cd Fullstack-Table-Reservation-App
+git clone https://github.com/Borub-ar/Fullstack-Table-Booking-App.git
+cd Fullstack-Table-Booking-App
 npm run setup
 ```
 
@@ -77,7 +77,7 @@ Utwórz plik `server/src/.env` z następującymi zmiennymi:
 PORT=8000
 
 # MongoDB (obowiązkowe)
-MONGO_URL=mongodb://localhost:27017/table-reservation
+MONGO_URL=mongodb://localhost:27017/table-booking
 
 # JWT (opcjonalne w dev – używany jest fallback)
 JWT_SECRET=twoj-tajny-klucz-min-32-znaki
@@ -163,4 +163,4 @@ ISC
 ---
 
 **Autor:** Kacper Barabasz  
-**Repo:** [Fullstack-Table-Reservation-App](https://github.com/Borub-ar/Fullstack-Table-Reservation-App)
+**Repo:** [Fullstack-Table-Booking-App](https://github.com/Borub-ar/Fullstack-Table-Booking-App)

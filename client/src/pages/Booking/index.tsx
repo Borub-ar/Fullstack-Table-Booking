@@ -11,7 +11,7 @@ const BookingLayout = () => {
       <main className='relative flex-1 min-w-0 min-h-0 overflow-hidden flex flex-col pt-14 md:pt-0 pb-24 md:pb-0'>
         <header className='md:hidden shrink-0 absolute top-0 left-0 right-0 z-40 h-14 bg-zinc-950/90 backdrop-blur-xl border-b border-zinc-800 flex items-center px-4'>
           <Link to='/booking' className='text-lg font-semibold text-white tracking-tight truncate'>
-            Table Reserve
+            Table Booking
           </Link>
         </header>
         <div className='flex-1 min-w-0 min-h-0 overflow-hidden flex flex-col md:flex-row'>
