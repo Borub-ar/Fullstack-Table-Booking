@@ -1,6 +1,6 @@
 # Table Booking
 
-Aplikacja pełnostackowa do rezerwacji stolików w restauracji. Użytkownicy mogą rejestrować konta, weryfikować e-mail, logować się oraz przeglądać i tworzyć rezerwacje.
+A fullstack application for restaurant table bookings. Users can register accounts, verify email, log in, and browse and create bookings.
 
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![React](https://img.shields.io/badge/React-19-61dafb)
@@ -8,32 +8,32 @@ Aplikacja pełnostackowa do rezerwacji stolików w restauracji. Użytkownicy mog
 ![MongoDB](https://img.shields.io/badge/MongoDB-6+-green)
 ![License](https://img.shields.io/badge/license-ISC-blue)
 
-## ✨ Funkcjonalności
+## ✨ Features
 
-- **Rejestracja** – tworzenie konta z walidacją
-- **Weryfikacja e-mail** – link aktywacyjny wysyłany po rejestracji
-- **Logowanie** – JWT (access + refresh token), opcja "Remember me"
-- **Rezerwacja stolików** – interfejs wyboru daty, godziny i stolika
-- **Historia rezerwacji** – przegląd własnych rezerwacji
-- **Responsywny UI** – layout dopasowany do desktop i mobile 
+- **Registration** – account creation with validation
+- **Email verification** – activation link sent after registration
+- **Login** – JWT (access + refresh token), "Remember me" option
+- **Table booking** – interface for selecting date, time and table
+- **Booking history** – view your own bookings
+- **Responsive UI** – layout adapted for desktop and mobile
 
-## 🛠 Technologie
+## 🛠 Tech Stack
 
-| Warstwa      | Stack                                   |
-| ------------ | --------------------------------------- |
-| **Frontend** | React 19, Vite 7, TypeScript, Tailwind CSS 4, React Router 7 |
-| **Backend**  | Node.js, Express 5, TypeScript          |
-| **Baza**     | MongoDB (Mongoose)                     |
-| **Auth**     | JWT, bcrypt, cookies                   |
-| **E-mail**   | Nodemailer (Gmail SMTP)                |
-| **Walidacja**| Zod (shared schema)                    |
+| Layer       | Stack                                   |
+| ----------- | --------------------------------------- |
+| **Frontend**| React 19, Vite 7, TypeScript, Tailwind CSS 4, React Router 7 |
+| **Backend** | Node.js, Express 5, TypeScript          |
+| **Database**| MongoDB (Mongoose)                     |
+| **Auth**    | JWT, bcrypt, cookies                   |
+| **Email**   | Nodemailer (Gmail SMTP)                |
+| **Validation**| Zod (shared schema)                  |
 
-## 📁 Struktura projektu
+## 📁 Project Structure
 
 ```
 ├── client/                 # Frontend (React + Vite)
 │   ├── src/
-│   │   ├── components/     # Komponenty UI
+│   │   ├── components/     # UI components
 │   │   ├── hooks/          # useUser, requests
 │   │   ├── pages/          # Auth, Booking, Error
 │   │   └── types/
@@ -42,25 +42,25 @@ Aplikacja pełnostackowa do rezerwacji stolików w restauracji. Użytkownicy mog
 │   └── src/
 │       ├── middleware/     # errorHandler, rateLimit
 │       ├── models/         # users (MongoDB)
-│       ├── routes/        # users.router
-│       ├── services/      # email
-│       └── utils/         # JWT, tryCatch
+│       ├── routes/         # users.router
+│       ├── services/       # email
+│       └── utils/          # JWT, tryCatch
 ├── shared/
 │   └── validation/         # registrationSchema (Zod)
 ├── .github/workflows/      # CI (Node 20, MongoDB 6/7)
-├── package.json            # Root – skrypty + concurrently
+├── package.json            # Root – scripts + concurrently
 └── README.md
 ```
 
-## 📋 Wymagania
+## 📋 Requirements
 
-- **Node.js** 20.x lub nowszy
-- **MongoDB** 6.0 lub 7.0 (lokalnie lub Atlas)
+- **Node.js** 20.x or newer
+- **MongoDB** 6.0 or 7.0 (local or Atlas)
 - **npm** 9+
 
-## 🚀 Instalacja
+## 🚀 Installation
 
-### 1. Klonowanie i instalacja zależności
+### 1. Clone and install dependencies
 
 ```bash
 git clone https://github.com/Borub-ar/Fullstack-Table-Booking-App.git
@@ -68,99 +68,99 @@ cd Fullstack-Table-Booking-App
 npm run setup
 ```
 
-### 2. Zmienne środowiskowe
+### 2. Environment variables
 
-Utwórz plik `server/src/.env` z następującymi zmiennymi:
+Create `server/src/.env` with the following variables:
 
 ```env
-# Serwer
+# Server
 PORT=8000
 
-# MongoDB (obowiązkowe)
+# MongoDB (required)
 MONGO_URL=mongodb://localhost:27017/table-booking
 
-# JWT (opcjonalne w dev – używany jest fallback)
-JWT_SECRET=twoj-tajny-klucz-min-32-znaki
+# JWT (optional in dev – fallback is used)
+JWT_SECRET=your-secret-key-min-32-characters
 
-# E-mail – weryfikacja konta (Gmail)
-EMAIL_USER=twoj-email@gmail.com
-EMAIL_PASSWORD=haslo-aplikacji-gmail
+# Email – account verification (Gmail)
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=gmail-app-password
 CLIENT_URL=http://localhost:5173
 ```
 
-> **Uwaga:** Dla Gmaila użyj [hasła aplikacji](https://support.google.com/accounts/answer/185833), nie zwykłego hasła.
+> **Note:** For Gmail, use an [app password](https://support.google.com/accounts/answer/185833), not your regular password.
 
-Opcjonalnie w `client/` – `.env`:
+Optionally in `client/` – `.env`:
 
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-### 3. Uruchomienie
+### 3. Run
 
 ```bash
-# Jednocześnie backend + frontend
+# Backend + frontend concurrently
 npm run dev
 ```
 
 - **Frontend:** http://localhost:5173  
 - **Backend API:** http://localhost:8000  
 
-## 📜 Dostępne skrypty
+## 📜 Available Scripts
 
-| Skrypt       | Opis                                      |
-| ------------ | ----------------------------------------- |
-| `npm run setup` | Instalacja zależności (root, client, server) |
-| `npm run dev`   | Uruchamia serwer i frontend równolegle     |
-| `npm run build` | Build client + server                      |
-| `npm run test`  | Testy server + client                      |
-| `npm run lint`  | ESLint dla server i client                 |
-| `npm run audit` | Audyt bezpieczeństwa                      |
+| Script        | Description                                      |
+| ------------- | ------------------------------------------------ |
+| `npm run setup` | Install dependencies (root, client, server)   |
+| `npm run dev`   | Run server and frontend concurrently             |
+| `npm run build` | Build client + server                            |
+| `npm run test`  | Tests for server + client                        |
+| `npm run lint`  | ESLint for server and client                     |
+| `npm run audit` | Security audit                                   |
 
-**Tylko client:**
+**Client only:**
 ```bash
 npm run dev --prefix client      # Dev server
-npm run build --prefix client    # Produkcyjny build
-npm run preview --prefix client  # Podgląd builda
+npm run build --prefix client    # Production build
+npm run preview --prefix client  # Preview build
 ```
 
-**Tylko server:**
+**Server only:**
 ```bash
-npm run dev --prefix server      # Uruchomienie (tsx)
+npm run dev --prefix server      # Run (tsx)
 npm run watch --prefix server    # Nodemon + hot reload
 ```
 
 ## 🔌 API
 
-| Metoda | Endpoint | Opis |
-|--------|----------|------|
-| POST | `/users/create` | Rejestracja |
-| POST | `/users/send-verification-email` | Wyślij e-mail weryfikacyjny |
-| GET | `/users/verify-email/:token` | Weryfikacja e-mail |
-| POST | `/users/resend-verification-email` | Ponowne wysłanie linku |
-| POST | `/users/login` | Logowanie |
-| POST | `/users/logout` | Wylogowanie |
-| POST | `/users/refresh-session-token` | Odświeżenie JWT |
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/users/create` | Registration |
+| POST | `/users/send-verification-email` | Send verification email |
+| GET | `/users/verify-email/:token` | Email verification |
+| POST | `/users/resend-verification-email` | Resend verification link |
+| POST | `/users/login` | Login |
+| POST | `/users/logout` | Logout |
+| POST | `/users/refresh-session-token` | Refresh JWT |
 
-Requesty są ograniczane (rate limiting) oraz chronione CORS (whitelist: `http://localhost:5173`).
+Requests are rate-limited and protected by CORS (whitelist: `http://localhost:5173`).
 
 ## 🧪 CI/CD
 
-GitHub Actions uruchamia:
+GitHub Actions runs:
 
-- instalację zależności,
+- dependency installation,
 - build,
-- audyt bezpieczeństwa,
+- security audit,
 - lint,
-- testy,
+- tests,
 
-dla Node 20 i MongoDB 6.0 oraz 7.0.
+for Node 20 and MongoDB 6.0 as well as 7.0.
 
-## 📄 Licencja
+## 📄 License
 
 ISC
 
 ---
 
-**Autor:** Kacper Barabasz  
+**Author:** Kacper Barabasz  
 **Repo:** [Fullstack-Table-Booking-App](https://github.com/Borub-ar/Fullstack-Table-Booking-App)
