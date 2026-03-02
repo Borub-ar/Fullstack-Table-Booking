@@ -1,7 +1,7 @@
 interface InputProps {
   labelText: string;
   inputId: string;
-  type: string;
+  type: React.HTMLInputTypeAttribute;
   value?: string;
   dataType?: string;
   errors?: string[];

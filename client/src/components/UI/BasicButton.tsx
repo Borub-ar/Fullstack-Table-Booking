@@ -2,7 +2,7 @@ interface BasicButtonProps {
   label: string;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>;
 }
 
 const BasicButton = ({ label, type = 'button', disabled, onClick }: BasicButtonProps) => {

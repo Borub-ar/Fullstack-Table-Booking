@@ -1,7 +1,7 @@
 class AppError extends Error {
   errorCode: number;
   statusCode: number;
-  fields?: string[];
+  fields: string[];
 
   constructor(errorCode: number, message: string, statusCode: number, fields?: string[]) {
     super(message);

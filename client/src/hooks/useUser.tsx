@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 import type { CreateUserData } from '../types/user';
 
@@ -13,13 +14,12 @@ import {
 const useUser = () => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const registerUser = async (userData: CreateUserData) => {
-    if (isLoading) return;
-    setIsLoading(true);
+  const registerMutation = useMutation({
+    mutationFn: (userData: CreateUserData) => httpRegisterUser(userData),
+  });
 
-    const result = await httpRegisterUser(userData);
-    setIsLoading(false);
-    return result;
+  const registerUser = async (userData: CreateUserData) => {
+    return registerMutation.mutateAsync(userData);
   };
 
   const sendVerificationEmail = async (email: string) => {

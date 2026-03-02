@@ -1,14 +1,10 @@
 import axios, { AxiosError } from 'axios';
 
+import type { CreateUserData } from '../types/user';
+
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-interface RegisterUserData {
-  username: string;
-  email: string;
-  password: string;
-}
-
-export const httpRegisterUser = async (userData: RegisterUserData) => {
+export const httpRegisterUser = async (userData: CreateUserData) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/users/create`, userData);
     return response.data;
