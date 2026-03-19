@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import type { CreateUserData } from '../types/user';
@@ -11,9 +10,13 @@ import {
   httpVerifyEmail,
 } from './requests';
 
-const useUser = () => {
-  const [isLoading, setIsLoading] = useState(false);
+interface LoginUserVariables {
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}
 
+const useUser = () => {
   const registerMutation = useMutation({
     mutationFn: (userData: CreateUserData) => httpRegisterUser(userData),
   });
@@ -22,41 +25,45 @@ const useUser = () => {
     return registerMutation.mutateAsync(userData);
   };
 
-  const sendVerificationEmail = async (email: string) => {
-    if (isLoading) return;
-    setIsLoading(true);
+  const sendVerificationEmailMutation = useMutation({
+    mutationFn: (email: string) => httpSendVerificationEmail(email),
+  });
 
-    const result = await httpSendVerificationEmail(email);
-    setIsLoading(false);
-    return result;
+  const sendVerificationEmail = async (email: string) => {
+    return sendVerificationEmailMutation.mutateAsync(email);
   };
+
+  const verifyEmailMutation = useMutation({
+    mutationFn: (token: string) => httpVerifyEmail(token),
+  });
 
   const verifyEmail = async (token: string) => {
-    if (isLoading) return;
-    setIsLoading(true);
-
-    const result = await httpVerifyEmail(token);
-    setIsLoading(false);
-    return result;
+    return verifyEmailMutation.mutateAsync(token);
   };
+
+  const resendVerificationEmailMutation = useMutation({
+    mutationFn: (token: string) => httpResendVerificationEmail(token),
+  });
 
   const resendVerificationEmail = async (token: string) => {
-    if (isLoading) return;
-    setIsLoading(true);
-
-    const result = await httpResendVerificationEmail(token);
-    setIsLoading(false);
-    return result;
+    return resendVerificationEmailMutation.mutateAsync(token);
   };
+
+  const loginUserMutation = useMutation({
+    mutationFn: ({ username, password, rememberMe }: LoginUserVariables) =>
+      httpLoginUser(username, password, rememberMe),
+  });
 
   const loginUser = async (username: string, password: string, rememberMe: boolean) => {
-    if (isLoading) return;
-    setIsLoading(true);
-
-    const result = await httpLoginUser(username, password, rememberMe);
-    setIsLoading(false);
-    return result;
+    return loginUserMutation.mutateAsync({ username, password, rememberMe });
   };
+
+  const isLoading =
+    registerMutation.isPending ||
+    sendVerificationEmailMutation.isPending ||
+    verifyEmailMutation.isPending ||
+    resendVerificationEmailMutation.isPending ||
+    loginUserMutation.isPending;
 
   return { registerUser, sendVerificationEmail, verifyEmail, resendVerificationEmail, loginUser, isLoading };
 };

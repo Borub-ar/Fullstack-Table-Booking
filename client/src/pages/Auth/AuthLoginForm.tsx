@@ -20,6 +20,7 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     const response = await loginUser(username, password, rememberMe);
+    console.log(response);
 
     if (!response.success) {
       showToast(response.message, 'error');
@@ -27,7 +28,7 @@ const LoginForm = () => {
     }
 
     showToast(response.message, 'success');
-    // navigate('/');
+    navigate('/booking');
   };
 
   return (
