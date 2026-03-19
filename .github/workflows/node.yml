@@ -32,7 +32,7 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
 
-      - run: npm run setup
+      - run: npm ci && npm ci --prefix client && npm ci --prefix server
       - run: npm run build
       - run: npm run audit
       - run: npm run lint
