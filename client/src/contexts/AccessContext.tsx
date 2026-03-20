@@ -11,7 +11,7 @@ export const AccessContext = createContext<AccessContextValue | null>(null);
 
 export const AccessContextProvider = ({ children }: { children: ReactNode }) => {
   const [accessToken, setAccessToken] = useState('');
-  
+
   const isAuthenticated = !!accessToken;
 
   return (

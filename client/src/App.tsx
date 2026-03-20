@@ -15,6 +15,7 @@ import BookingLayout from './pages/Booking';
 import BookingPage from './pages/Booking/BookingPanel';
 
 import PageNotFound from './pages/Error/PageNotFound';
+import RequireAuth from './components/Routing/RequireAuth';
 
 const queryClient = new QueryClient();
 
@@ -33,9 +34,11 @@ function App() {
               </Route>
             </Route>
 
-            <Route path='/booking' element={<BookingLayout />}>
-              <Route index element={<BookingPage />} />
-              <Route path='history' element={<BookingHistoryPage />} />
+            <Route element={<RequireAuth />}>
+              <Route path='/booking' element={<BookingLayout />}>
+                <Route index element={<BookingPage />} />
+                <Route path='history' element={<BookingHistoryPage />} />
+              </Route>
             </Route>
 
             <Route path='/*' element={<PageNotFound />} />
