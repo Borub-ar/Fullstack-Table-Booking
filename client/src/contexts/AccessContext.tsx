@@ -1,8 +1,20 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, type ReactNode } from 'react';
+import { createContext, useState, type Dispatch, type ReactNode, type SetStateAction } from 'react';
 
-const AccessContext = createContext('');
+type AccessContextValue = {
+  accessToken: string;
+  setAccessToken: Dispatch<SetStateAction<string>>;
+  isAuthenticated: boolean;
+};
+
+export const AccessContext = createContext<AccessContextValue | null>(null);
 
 export const AccessContextProvider = ({ children }: { children: ReactNode }) => {
-  return <AccessContext.Provider value={''}>{children}</AccessContext.Provider>;
+  const [accessToken, setAccessToken] = useState('');
+  
+  const isAuthenticated = !!accessToken;
+
+  return (
+    <AccessContext.Provider value={{ accessToken, setAccessToken, isAuthenticated }}>{children}</AccessContext.Provider>
+  );
 };

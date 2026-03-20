@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 
 import BasicButton from '../../components/UI/BasicButton';
 import Checkbox from '../../components/UI/Checkbox';
 import Input from '../../components/UI/Input';
 import LoadingOverlay from '../../components/UI/LoadingOverlay';
+import { AccessContext } from '../../contexts/AccessContext';
 
 import useUser from '../../hooks/useUser';
 import type { AuthOutletContext } from './AuthWrapper';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const accessContext = useContext(AccessContext);
   const { loginUser, isLoading } = useUser();
   const { showToast } = useOutletContext<AuthOutletContext>();
 
@@ -18,15 +20,21 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
 
+  if (!accessContext) {
+    throw new Error('AuthLoginForm must be used inside AccessContextProvider');
+  }
+
+  const { setAccessToken } = accessContext;
+
   const handleLogin = async () => {
     const response = await loginUser(username, password, rememberMe);
-    console.log(response);
 
     if (!response.success) {
       showToast(response.message, 'error');
       return;
     }
 
+    setAccessToken(response.accessToken);
     showToast(response.message, 'success');
     navigate('/booking');
   };
