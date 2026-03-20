@@ -184,10 +184,10 @@ const loginUser = async (username: string, password: string, rememberMe: boolean
       throw new AppError(UNVERIFIED_ACCOUNT.errorCode, UNVERIFIED_ACCOUNT.message, 400);
     }
 
-    const accessJwtToken = generateJwtToken(user.id, user.username, '15min');
-    const refreshJwtToken = generateJwtToken(user.id, user.username, '7d');
+    const accessToken = generateJwtToken(user.id, user.username, '15min');
+    const refreshToken = generateJwtToken(user.id, user.username, '7d');
 
-    return { success: true, message: 'Login successful', accessToken: accessJwtToken, refreshToken: refreshJwtToken };
+    return { success: true, message: 'Login successful', accessToken, refreshToken };
   } catch (error) {
     console.error('Error logging in:', error);
     if (error instanceof AppError) throw error;

@@ -1,5 +1,6 @@
 import cors, { type CorsOptions } from 'cors';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 
 import { errorHandler } from './middleware/errorHandler.js';
 import { appLimiter } from './middleware/rateLimit.js';
@@ -17,9 +18,11 @@ const corsOptions: CorsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
+app.use(cookieParser());
 app.use(express.json());
 app.use(appLimiter);
 

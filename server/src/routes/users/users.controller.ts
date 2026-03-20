@@ -38,7 +38,18 @@ export const verifyEmailHandler = tryCatch(async (req: Request, res: Response) =
 export const loginUserHandler = tryCatch(async (req: Request, res: Response) => {
   const { username, password, rememberMe } = req.body;
   const response = await loginUser(username, password, rememberMe);
-  return res.status(200).json(response);
+
+  res.cookie('refreshToken', response.refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000,
+    path: '/',
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { refreshToken, ...responseData } = response;
+  return res.status(200).json(responseData);
 });
 
 export const logoutUserHandler = tryCatch(async (req: Request, res: Response) => {
