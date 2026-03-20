@@ -15,7 +15,7 @@ import BookingLayout from './pages/Booking';
 import BookingPage from './pages/Booking/BookingPanel';
 
 import PageNotFound from './pages/Error/PageNotFound';
-import RequireAuth from './components/Routing/RequireAuth';
+import RequireAuth from './components/routing/RequireAuth';
 
 const queryClient = new QueryClient();
 
