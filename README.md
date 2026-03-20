@@ -1,6 +1,6 @@
-# Table Booking
+# Table Booking App
 
-A fullstack application for restaurant table bookings. Users can register accounts, verify email, log in, and browse and create bookings.
+A full-stack project for learning and developing a restaurant table reservation app. The repository currently includes a working user authentication flow and a frontend booking panel prototype.
 
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-green)
 ![React](https://img.shields.io/badge/React-19-61dafb)
@@ -8,59 +8,68 @@ A fullstack application for restaurant table bookings. Users can register accoun
 ![MongoDB](https://img.shields.io/badge/MongoDB-6+-green)
 ![License](https://img.shields.io/badge/license-ISC-blue)
 
-## ✨ Features
+## Project Status
 
-- **Registration** – account creation with validation
-- **Email verification** – activation link sent after registration
-- **Login** – JWT (access + refresh token), "Remember me" option
-- **Table booking** – interface for selecting date, time and table
-- **Booking history** – view your own bookings
-- **Responsive UI** – layout adapted for desktop and mobile
+This project is not yet a complete end-to-end reservation system.
 
-## 🛠 Tech Stack
+Implemented:
 
-| Layer       | Stack                                   |
-| ----------- | --------------------------------------- |
-| **Frontend**| React 19, Vite 7, TypeScript, Tailwind CSS 4, React Router 7 |
-| **Backend** | Node.js, Express 5, TypeScript          |
-| **Database**| MongoDB (Mongoose)                     |
-| **Auth**    | JWT, bcrypt, cookies                   |
-| **Email**   | Nodemailer (Gmail SMTP)                |
-| **Validation**| Zod (shared schema)                  |
+- user registration with validation,
+- verification email sending,
+- email confirmation via token,
+- verification email resend flow,
+- login with access token and refresh token generation,
+- protected client-side routes,
+- responsive UI for auth and booking views.
 
-## 📁 Project Structure
+In progress / still to build:
 
-```
-├── client/                 # Frontend (React + Vite)
-│   ├── src/
-│   │   ├── components/     # UI components
-│   │   ├── hooks/          # useUser, requests
-│   │   ├── pages/          # Auth, Booking, Error
-│   │   └── types/
-│   └── package.json
-├── server/                 # Backend (Express)
-│   └── src/
-│       ├── middleware/     # errorHandler, rateLimit
-│       ├── models/         # users (MongoDB)
-│       ├── routes/         # users.router
-│       ├── services/       # email
-│       └── utils/          # JWT, tryCatch
-├── shared/
-│   └── validation/         # registrationSchema (Zod)
-├── .github/workflows/      # CI (Node 20, MongoDB 6/7)
-├── package.json            # Root – scripts + concurrently
+- backend logic for table reservations,
+- storing and fetching reservation history,
+- full `logout` implementation,
+- session refresh via `refresh-session-token`.
+
+## Tech Stack
+
+| Layer | Stack |
+| --- | --- |
+| Frontend | React 19, Vite 7, TypeScript, Tailwind CSS 4, React Router 7 |
+| State and requests | TanStack React Query, Axios |
+| Backend | Node.js, Express 5, TypeScript |
+| Database | MongoDB + Mongoose |
+| Auth | JWT, bcrypt |
+| Email | Nodemailer |
+| Validation | Zod |
+| Testing | Vitest |
+
+## Main Views
+
+- `/auth/register` - registration form
+- `/auth/login` - login form
+- `/auth/verify-email` - verification notice screen
+- `/auth/verify-email-result` - account activation result after clicking the email link
+- `/booking` - date, time, and table selection view
+- `/booking/history` - reservation history view
+
+## Project Structure
+
+```text
+.
+├── client/                  # React + Vite frontend app
+├── server/                  # Express + MongoDB API
+├── shared/                  # shared validation schemas
+├── .github/workflows/       # CI pipeline
+├── package.json             # root-level scripts
 └── README.md
 ```
 
-## 📋 Requirements
+## Requirements
 
-- **Node.js** 20.x or newer
-- **MongoDB** 6.0 or 7.0 (local or Atlas)
-- **npm** 9+
+- `Node.js` 20+
+- `npm` 9+
+- `MongoDB` 6+ locally or in the cloud
 
-## 🚀 Installation
-
-### 1. Clone and install dependencies
+## Installation
 
 ```bash
 git clone https://github.com/Borub-ar/Fullstack-Table-Booking-App.git
@@ -68,99 +77,112 @@ cd Fullstack-Table-Booking-App
 npm run setup
 ```
 
-### 2. Environment variables
+## Environment Variables
 
-Create `server/src/.env` with the following variables:
+The server loads environment variables from `server/src/.env`.
 
 ```env
-# Server
 PORT=8000
-
-# MongoDB (required)
 MONGO_URL=mongodb://localhost:27017/table-booking
-
-# JWT (optional in dev – fallback is used)
-JWT_SECRET=your-secret-key-min-32-characters
-
-# Email – account verification (Gmail)
+JWT_SECRET=your-secret-key
 EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=gmail-app-password
+EMAIL_PASSWORD=your-gmail-app-password
 CLIENT_URL=http://localhost:5173
 ```
 
-> **Note:** For Gmail, use an [app password](https://support.google.com/accounts/answer/185833), not your regular password.
+Notes:
 
-Optionally in `client/` – `.env`:
+- `MONGO_URL` is required for the backend to start.
+- `JWT_SECRET` has a development fallback, but it should be set explicitly in practice.
+- for Gmail, use an [App Password](https://support.google.com/accounts/answer/185833), not your regular password.
+- `CLIENT_URL` is used to build the verification link sent by email.
+
+Optionally, you can add `client/.env`:
 
 ```env
 VITE_API_URL=http://localhost:8000
 ```
 
-### 3. Run
+## Run Locally
+
+Start the frontend and backend together:
 
 ```bash
-# Backend + frontend concurrently
 npm run dev
 ```
 
-- **Frontend:** http://localhost:5173  
-- **Backend API:** http://localhost:8000  
+Local addresses:
 
-## 📜 Available Scripts
+- frontend: `http://localhost:5173`
+- backend: `http://localhost:8000`
 
-| Script        | Description                                      |
-| ------------- | ------------------------------------------------ |
-| `npm run setup` | Install dependencies (root, client, server)   |
-| `npm run dev`   | Run server and frontend concurrently             |
-| `npm run build` | Build client + server                            |
-| `npm run test`  | Tests for server + client                        |
-| `npm run lint`  | ESLint for server and client                     |
-| `npm run audit` | Security audit                                   |
+## Available Scripts
 
-**Client only:**
+| Script | Description |
+| --- | --- |
+| `npm run setup` | installs dependencies in root, `client`, and `server` |
+| `npm run dev` | starts frontend and backend in parallel |
+| `npm run build` | builds the client and server |
+| `npm run lint` | runs ESLint for both apps |
+| `npm run test` | runs server and client tests |
+| `npm run audit` | runs a dependency security audit |
+
+Per-app scripts:
+
 ```bash
-npm run dev --prefix client      # Dev server
-npm run build --prefix client    # Production build
-npm run preview --prefix client  # Preview build
+npm run dev --prefix client
+npm run build --prefix client
+npm run preview --prefix client
+
+npm run dev --prefix server
+npm run watch --prefix server
+npm run start --prefix server
 ```
 
-**Server only:**
-```bash
-npm run dev --prefix server      # Run (tsx)
-npm run watch --prefix server    # Nodemon + hot reload
-```
+## API
 
-## 🔌 API
+The backend currently exposes mainly user and authentication endpoints:
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/users/create` | Registration |
-| POST | `/users/send-verification-email` | Send verification email |
-| GET | `/users/verify-email/:token` | Email verification |
-| POST | `/users/resend-verification-email` | Resend verification link |
-| POST | `/users/login` | Login |
-| POST | `/users/logout` | Logout |
-| POST | `/users/refresh-session-token` | Refresh JWT |
+| Method | Endpoint | Status | Description |
+| --- | --- | --- | --- |
+| `POST` | `/users/create` | ready | user registration |
+| `POST` | `/users/send-verification-email` | ready | send verification email |
+| `GET` | `/users/verify-email/:token` | ready | activate account |
+| `POST` | `/users/resend-verification-email` | ready | resend verification link |
+| `POST` | `/users/login` | ready | login and return tokens |
+| `POST` | `/users/logout` | placeholder | endpoint exists, but the logic is not implemented yet |
+| `POST` | `/users/refresh-session-token` | placeholder | endpoint exists, but the logic is not implemented yet |
 
-Requests are rate-limited and protected by CORS (whitelist: `http://localhost:5173`).
+Additionally, the API uses:
 
-## 🧪 CI/CD
+- `CORS` with a whitelist for `http://localhost:5173`,
+- rate limiting for the whole app and selected auth endpoints,
+- centralized error-handling middleware.
 
-GitHub Actions runs:
+## Testing And CI
+
+The repository includes a GitHub Actions pipeline that runs on `push` and `pull_request` to `main`:
 
 - dependency installation,
 - build,
-- security audit,
+- `npm audit`,
 - lint,
-- tests,
+- tests.
 
-for Node 20 and MongoDB 6.0 as well as 7.0.
+The CI matrix checks Node 20 and MongoDB 6.0 as well as 7.0.
 
-## 📄 License
+At the moment, test coverage is limited. The repository mainly contains a test for the `errorHandler` middleware, and the frontend has Vitest configured without real component tests yet.
+
+## Notes
+
+- The `/booking` and `/booking/history` views are currently mostly UI screens without a connected reservation backend.
+- Login returns JWT tokens in the API response; a cookie-based session flow is not implemented yet.
+- Shared registration validation lives in `shared/validation/registrationSchema.ts`.
+
+## License
 
 ISC
 
----
+## Author
 
-**Author:** Kacper Barabasz  
-**Repo:** [Fullstack-Table-Booking-App](https://github.com/Borub-ar/Fullstack-Table-Booking-App)
+Kacper Barabasz
