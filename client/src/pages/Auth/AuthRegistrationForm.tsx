@@ -1,59 +1,30 @@
-import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { z } from 'zod';
 
 import BasicButton from '../../components/UI/BasicButton';
 import Input from '../../components/UI/Input';
 import LoadingOverlay from '../../components/UI/LoadingOverlay';
 
 import useUser from '../../hooks/useUser';
-
-import { registrationSchema } from '../../../../shared/validation/registrationSchema';
+import useRegister from '../../hooks/useRegister';
 
 import type { AuthOutletContext } from './AuthWrapper';
-import type { FormData } from '../../types/user';
 
 const RegistrationForm = () => {
   const navigate = useNavigate();
   const { showToast } = useOutletContext<AuthOutletContext>();
 
-  const [formData, setFormData] = useState<FormData>({
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const [validationErrors, setValidationErrors] = useState<Record<string, string[]>>({});
-  const [emailExternalError, setEmailExternalError] = useState(false);
-  const [usernameExternalError, setUsernameExternalError] = useState(false);
+  const {
+    formData,
+    validationErrors,
+    emailExternalError,
+    usernameExternalError,
+    validateForm,
+    saveInputValues,
+    setEmailExternalError,
+    setUsernameExternalError,
+  } = useRegister();
 
   const { registerUser, isLoading } = useUser();
-
-  const saveInputValues = (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
-    const { value, dataset } = e.target;
-
-    if (dataset.type === 'email') setEmailExternalError(false);
-    if (dataset.type === 'username') setUsernameExternalError(false);
-
-    setFormData(prev => {
-      return { ...prev, [dataset.type as keyof typeof formData]: value };
-    });
-
-    setValidationErrors(prev => {
-      return { ...prev, [dataset.type as keyof typeof formData]: [] };
-    });
-  };
-
-  const validateForm = () => {
-    const result = registrationSchema.safeParse(formData);
-
-    if (!result.success) {
-      setValidationErrors(z.flattenError(result.error).fieldErrors);
-    }
-
-    return result.success;
-  };
 
   const handleRegistration = async () => {
     setEmailExternalError(false);

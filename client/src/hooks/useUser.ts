@@ -8,7 +8,7 @@ import {
   httpResendVerificationEmail,
   httpSendVerificationEmail,
   httpVerifyEmail,
-} from './requests';
+} from '../api/requests';
 
 interface LoginUserVariables {
   username: string;
