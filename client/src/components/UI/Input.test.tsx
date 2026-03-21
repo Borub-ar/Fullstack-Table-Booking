@@ -56,24 +56,24 @@ describe('Input', () => {
   });
 
   it('renders a single error message', () => {
-    const error = ['Required!'];
-    render(<Input labelText='username' inputId='test-input' type='text' errors={error} />);
+    const errorMock = ['Required!'];
+    render(<Input labelText='username' inputId='test-input' type='text' errors={errorMock} />);
 
     const errorMsg = screen.getByText('Required!');
     expect(errorMsg).toBeInTheDocument();
   });
 
   it('renders multiple error messages', () => {
-    const errors = ['Required!', 'Too short!'];
-    render(<Input labelText='username' inputId='test-input' type='text' errors={errors} />);
+    const errorsMock = ['Required!', 'Too short!'];
+    render(<Input labelText='username' inputId='test-input' type='text' errors={errorsMock} />);
 
     expect(screen.getByText('Required!')).toBeInTheDocument();
     expect(screen.getByText('Too short!')).toBeInTheDocument();
   });
 
   it('applies error styles when errors are present', () => {
-    const error = ['Required!'];
-    render(<Input labelText='username' inputId='test-input' type='text' errors={error} />);
+    const errorMock = ['Required!'];
+    render(<Input labelText='username' inputId='test-input' type='text' errors={errorMock} />);
 
     expect(screen.getByLabelText('username')).toHaveClass('text-(--error-clr)');
     expect(screen.getByRole('textbox')).toHaveClass('text-(--error-clr)');
