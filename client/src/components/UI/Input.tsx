@@ -20,7 +20,7 @@ const Input = ({ labelText, inputId, type, value, dataType, errors, noLabelError
       <label htmlFor={inputId} className={labelClasses}>
         {labelText}
       </label>
-      <input type={type} value={value} data-type={dataType} className={inputClasses} onChange={onChange} />
+      <input id={inputId} type={type} value={value} data-type={dataType} className={inputClasses} onChange={onChange} />
 
       {errors &&
         hasErrors &&
