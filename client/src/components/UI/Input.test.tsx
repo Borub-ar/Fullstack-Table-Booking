@@ -1,5 +1,6 @@
 import { render, screen, cleanup } from '@testing-library/react';
-import { afterEach, describe, it, expect } from 'vitest';
+import { afterEach, describe, it, expect, vi } from 'vitest';
+import userEvent from '@testing-library/user-event';
 
 import '@testing-library/jest-dom/vitest';
 
@@ -11,13 +12,13 @@ afterEach(() => {
 
 describe('Input', () => {
   it('renders input element', () => {
-    render(<Input labelText='test' inputId='test-input' type='text' />);
+    render(<Input labelText='username' inputId='test-input' type='text' />);
     expect(screen.getByRole('textbox')).toBeInTheDocument();
   });
 
   it('renders label', () => {
-    render(<Input labelText='test' inputId='test-input' type='text' />);
-    expect(screen.getByText('test')).toBeInTheDocument();
+    render(<Input labelText='username' inputId='test-input' type='text' />);
+    expect(screen.getByText('username')).toBeInTheDocument();
   });
 
   it('sets the correct input type', () => {
@@ -26,22 +27,69 @@ describe('Input', () => {
   });
 
   it('passes value to the input', () => {
-    render(<Input labelText='value' inputId='test-input' type='text' value='test-value' />);
+    render(<Input labelText='username' inputId='test-input' type='text' value='test-value' />);
     expect(screen.getByRole('textbox')).toHaveValue('test-value');
   });
 
   it('sets data-type attribute when dataType is provided', () => {
-    render(<Input labelText='value' inputId='test-input' type='text' dataType='type' />);
+    render(<Input labelText='username' inputId='test-input' type='text' dataType='type' />);
     expect(screen.getByRole('textbox')).toHaveAttribute('data-type', 'type');
   });
 
-  it('calls onChange when input value changes');
-  
-  it('does not render errors when errors is undefined');
-  it('does not render errors when errors array is empty');
-  it('renders a single error message');
-  it('renders multiple error messages');
-  it('applies error styles when errors are present');
-  it('applies error styles when noLabelError is true');
-  it('does not apply error styles when there are no errors and noLabelError is false');
+  it('calls onChange when input value changes', async () => {
+    const handleChange = vi.fn();
+
+    render(<Input labelText='username' inputId='test-input' type='text' onChange={handleChange} />);
+
+    await userEvent.type(screen.getByRole('textbox'), 'abc');
+    expect(handleChange).toHaveBeenCalled();
+  });
+
+  it('does not render errors when errors is undefined', () => {
+    render(<Input labelText='username' inputId='test-input' type='text' />);
+    expect(screen.queryByText('Required')).not.toBeInTheDocument();
+  });
+
+  it('does not render errors when errors array is empty', () => {
+    render(<Input labelText='username' inputId='test-input' type='text' errors={[]} />);
+    expect(screen.queryByText('Required')).not.toBeInTheDocument();
+  });
+
+  it('renders a single error message', () => {
+    const error = ['Required!'];
+    render(<Input labelText='username' inputId='test-input' type='text' errors={error} />);
+
+    const errorMsg = screen.getByText('Required!');
+    expect(errorMsg).toBeInTheDocument();
+  });
+
+  it('renders multiple error messages', () => {
+    const errors = ['Required!', 'Too short!'];
+    render(<Input labelText='username' inputId='test-input' type='text' errors={errors} />);
+
+    expect(screen.getByText('Required!')).toBeInTheDocument();
+    expect(screen.getByText('Too short!')).toBeInTheDocument();
+  });
+
+  it('applies error styles when errors are present', () => {
+    const error = ['Required!'];
+    render(<Input labelText='username' inputId='test-input' type='text' errors={error} />);
+
+    expect(screen.getByLabelText('username')).toHaveClass('text-(--error-clr)');
+    expect(screen.getByRole('textbox')).toHaveClass('text-(--error-clr)');
+  });
+
+  it('applies error styles when noLabelError is true', () => {
+    render(<Input labelText='username' inputId='test-input' type='text' noLabelError />);
+
+    expect(screen.getByLabelText('username')).toHaveClass('text-(--error-clr)');
+    expect(screen.getByRole('textbox')).toHaveClass('text-(--error-clr)');
+  });
+
+  it('does not apply error styles when there are no errors and noLabelError is false', () => {
+    render(<Input labelText='username' inputId='test-input' type='text' />);
+
+    expect(screen.getByLabelText('username')).not.toHaveClass('text-(--error-clr)');
+    expect(screen.getByRole('textbox')).not.toHaveClass('text-(--error-clr)');
+  });
 });
