@@ -25,9 +25,18 @@ describe('Input', () => {
     expect(screen.getByLabelText('password')).toHaveAttribute('type', 'password');
   });
 
-  it('passes value to the input');
-  it('sets data-type attribute when dataType is provided');
+  it('passes value to the input', () => {
+    render(<Input labelText='value' inputId='test-input' type='text' value='test-value' />);
+    expect(screen.getByRole('textbox')).toHaveValue('test-value');
+  });
+
+  it('sets data-type attribute when dataType is provided', () => {
+    render(<Input labelText='value' inputId='test-input' type='text' dataType='type' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('data-type', 'type');
+  });
+
   it('calls onChange when input value changes');
+  
   it('does not render errors when errors is undefined');
   it('does not render errors when errors array is empty');
   it('renders a single error message');
