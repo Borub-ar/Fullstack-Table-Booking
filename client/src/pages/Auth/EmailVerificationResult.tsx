@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useOutletContext, useSearchParams } from 'react-router-dom';
 
 import BasicButton from '../../components/UI/BasicButton';
@@ -11,6 +11,13 @@ import type { AuthOutletContext } from './AuthWrapper';
 const VERIFYING_EMAIL_LABEL = 'Verifying your email...';
 const SOMETHING_WENT_WRONG_LABEL = 'Something went wrong, please request a new verification email';
 
+interface VerificationResponse {
+  success?: boolean;
+  message: string;
+}
+
+const verificationRequests = new Map<string, Promise<VerificationResponse | undefined>>();
+
 const EmailVerificationResult = () => {
   const { verifyEmail, resendVerificationEmail, isLoading } = useUser();
   const navigate = useNavigate();
@@ -19,27 +26,27 @@ const EmailVerificationResult = () => {
   const [resultLabel, setResultLabel] = useState(VERIFYING_EMAIL_LABEL);
   const [isError, setIsError] = useState(false);
 
-  const verifiedTokenRef = useRef<string | null>(null);
-
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
 
   useEffect(() => {
     if (!token) return;
 
-    if (verifiedTokenRef.current === token) return;
-    verifiedTokenRef.current = token;
-
     const verifyEmailFunction = async () => {
-      const response = await verifyEmail(token);
+      const request = verificationRequests.get(token) ?? verifyEmail(token);
+      verificationRequests.set(token, request);
+
+      const response = await request;
 
       if (!response) {
+        verificationRequests.delete(token);
         setResultLabel(SOMETHING_WENT_WRONG_LABEL);
         setIsError(true);
         return;
       }
 
       if (!response.success) {
+        verificationRequests.delete(token);
         setIsError(true);
       }
 
