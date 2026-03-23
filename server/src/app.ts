@@ -6,6 +6,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 import { appLimiter } from './middleware/rateLimit.js';
 
 import userRouter from './routes/users/users.router.js';
+import tableRouter from './routes/tables/tables.router.js';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(appLimiter);
 
 app.use('/users', userRouter);
+app.use('/tables', tableRouter);
 
 app.use(errorHandler);
 
