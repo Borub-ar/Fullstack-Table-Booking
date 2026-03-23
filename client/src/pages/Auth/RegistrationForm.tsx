@@ -4,7 +4,6 @@ import BasicButton from '../../components/UI/BasicButton';
 import Input from '../../components/UI/Input';
 import LoadingOverlay from '../../components/UI/LoadingOverlay';
 
-import useUser from '../../hooks/useUser';
 import useRegister from '../../hooks/useRegister';
 
 import type { AuthOutletContext } from './AuthWrapper';
@@ -18,37 +17,10 @@ const RegistrationForm = () => {
     validationErrors,
     emailExternalError,
     usernameExternalError,
-    validateForm,
     saveInputValues,
-    setEmailExternalError,
-    setUsernameExternalError,
-  } = useRegister();
-
-  const { registerUser, isLoading } = useUser();
-
-  const handleRegistration = async () => {
-    setEmailExternalError(false);
-    setUsernameExternalError(false);
-
-    if (!validateForm()) return;
-
-    const response = await registerUser(formData);
-    if (!response) return;
-
-    showToast(response.message, response.success ? 'success' : 'error');
-
-    if (response.success) {
-      navigate('/auth/verify-email', {
-        state: { email: formData.email },
-      });
-      return;
-    }
-
-    if (response?.fields) {
-      if (response.fields.includes('email')) setEmailExternalError(true);
-      if (response.fields.includes('username')) setUsernameExternalError(true);
-    }
-  };
+    isLoading,
+    handleRegistration,
+  } = useRegister({ showToast });
 
   return (
     <>

@@ -4,10 +4,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AccessContextProvider } from './contexts/AccessContext';
 
 import AuthWrapper from './pages/Auth/AuthWrapper';
-import AuthEmailVerificationNotice from './pages/Auth/AuthEmailVerificationNotice';
-import AuthEmailVerificationResult from './pages/Auth/AuthEmailVerificationResult';
-import AuthLoginForm from './pages/Auth/AuthLoginForm';
-import AuthRegistrationForm from './pages/Auth/AuthRegistrationForm';
+import AuthEmailVerificationNotice from './pages/Auth/EmailVerificationNotice';
+import AuthEmailVerificationResult from './pages/Auth/EmailVerificationResult';
+import AuthLoginForm from './pages/Auth/LoginForm';
+import AuthRegistrationForm from './pages/Auth/RegistrationForm';
 import AuthSignup from './pages/Auth/index';
 
 import BookingHistoryPage from './pages/Booking/BookingHistoryPage';

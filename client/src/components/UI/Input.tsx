@@ -6,7 +6,7 @@ interface InputProps {
   dataType?: string;
   errors?: string[];
   noLabelError?: boolean;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
 const Input = ({ labelText, inputId, type, value, dataType, errors, noLabelError, onChange }: InputProps) => {
