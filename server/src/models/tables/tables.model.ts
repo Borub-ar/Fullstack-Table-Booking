@@ -1,10 +1,14 @@
-import mongoose from 'mongoose';
+import AppError from '../../AppError.js';
+import Table from '../tables/tables.mongo.js';
 
-const tableSchema = new mongoose.Schema({
-  mexGuestsNumber: { type: Number, required: true },
-  tableNumber: { type: Number, required: true },
-});
+const getAllTables = async () => {
+  try {
+    const allTables = await Table.find();
+    return { success: true, message: 'All Tables Fetched', data: allTables };
+  } catch (error) {
+    if (error instanceof AppError) throw error;
+    throw new Error('Something went wrong while creating user', { cause: error });
+  }
+};
 
-const Table = mongoose.model('table', tableSchema);
-
-export default Table;
+export { getAllTables };
