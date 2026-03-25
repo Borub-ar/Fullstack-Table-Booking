@@ -34,12 +34,12 @@ function App() {
               </Route>
             </Route>
 
-            <Route element={<RequireAuth />}>
-              <Route path='/booking' element={<BookingLayout />}>
-                <Route index element={<BookingPage />} />
-                <Route path='history' element={<BookingHistoryPage />} />
-              </Route>
+            {/* <Route element={<RequireAuth />}> */}
+            <Route path='/booking' element={<BookingLayout />}>
+              <Route index element={<BookingPage />} />
+              <Route path='history' element={<BookingHistoryPage />} />
             </Route>
+            {/* </Route> */}
 
             <Route path='/*' element={<PageNotFound />} />
           </Routes>

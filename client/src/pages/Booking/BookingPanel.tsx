@@ -1,6 +1,10 @@
+import useTable from '../../hooks/useTable';
+
 import BookingTable from './BookingTable';
 
 const BookingPage = () => {
+  const { tables, isLoading } = useTable();
+
   return (
     <div className='h-full min-w-0 flex flex-col p-4 sm:p-6 w-full max-w-full'>
       <h1 className='text-lg sm:text-xl font-semibold text-zinc-100 pb-4 shrink-0'>Rezerwacja stolika</h1>
@@ -36,9 +40,15 @@ const BookingPage = () => {
           Dostępne stoliki
         </h2>
         <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4 flex-1 min-h-0 content-start overflow-y-auto'>
-          {[1, 2, 3, 4, 5, 6, 7, 8].map(n => (
-            <BookingTable number={n} />
-          ))}
+          {isLoading && <p className='text-sm text-zinc-400'>Ladowanie stolikow...</p>}
+
+          {isError && <p className='text-sm text-red-400'>{error?.message ?? 'Nie udalo sie pobrac stolikow.'}</p>}
+
+          {!isLoading &&
+            !isError &&
+            tables.map(table => (
+              <BookingTable key={table._id} number={table.tableNumber} capacity={`Do ${table.mexGuestsNumber} os.`} />
+            ))}
         </div>
       </div>
 
