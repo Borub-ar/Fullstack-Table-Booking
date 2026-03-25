@@ -1,4 +1,6 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+
+import apiErrorCatchHandler from '../utils/apiErrorCatchHandler';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -19,7 +21,7 @@ const httpGetAllTables = async () => {
     const response = await axios.get<GetAllTablesResponse>(`${API_BASE_URL}/tables`);
     return response.data.data;
   } catch (error) {
-    return (error as AxiosError).response?.data;
+    apiErrorCatchHandler(error);
   }
 };
 
