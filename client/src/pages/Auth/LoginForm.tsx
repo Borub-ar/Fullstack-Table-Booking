@@ -13,8 +13,8 @@ import type { AuthOutletContext } from './AuthWrapper';
 const LoginForm = () => {
   const navigate = useNavigate();
   const accessContext = useContext(AccessContext);
-  const { loginUser, isLoading } = useUser();
   const { showToast } = useOutletContext<AuthOutletContext>();
+  const { loginUser, isLoading } = useUser();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -27,16 +27,20 @@ const LoginForm = () => {
   const { setAccessToken } = accessContext;
 
   const handleLogin = async () => {
-    const response = await loginUser(username, password, rememberMe);
+    try {
+      const response = await loginUser(username, password, rememberMe);
 
-    if (!response.success) {
-      showToast(response.message, 'error');
-      return;
+      setAccessToken(response.accessToken);
+      showToast(response.message, 'success');
+      navigate('/booking');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        showToast(error.message, 'error');
+        return;
+      }
+
+      showToast('Unknown error', 'error');
     }
-
-    setAccessToken(response.accessToken);
-    showToast(response.message, 'success');
-    navigate('/booking');
   };
 
   return (

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 import useUser from './useUser';
+import ApiError from '../utils/apiError';
 
 import type { FormData } from '../types/user';
 import { registrationSchema } from '../../../shared/validation/registrationSchema';
@@ -64,21 +65,28 @@ const useRegister = ({ showToast }: UseRegisterOptions) => {
 
     if (!validateForm()) return;
 
-    const response = await registerUser(formData);
-    if (!response) return;
+    try {
+      const response = await registerUser(formData);
 
-    showToast(response.message, response.success ? 'success' : 'error');
-
-    if (response.success) {
+      showToast(response.message, 'success');
       navigate('/auth/verify-email', {
         state: { email: formData.email },
       });
-      return;
-    }
+    } catch (error: unknown) {
+      if (error instanceof ApiError) {
+        showToast(error.message, 'error');
 
-    if (response?.fields) {
-      if (response.fields.includes('email')) setEmailExternalError(true);
-      if (response.fields.includes('username')) setUsernameExternalError(true);
+        if (error.fields?.includes('email')) setEmailExternalError(true);
+        if (error.fields?.includes('username')) setUsernameExternalError(true);
+        return;
+      }
+
+      if (error instanceof Error) {
+        showToast(error.message, 'error');
+        return;
+      }
+
+      showToast('Unknown error', 'error');
     }
   };
 

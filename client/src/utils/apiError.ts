@@ -1,6 +1,7 @@
 class ApiError extends Error {
   errorCode?: number;
   fields?: string[];
+  
   constructor(message: string, options?: { errorCode?: number; fields?: string[] }) {
     super(message);
     this.name = 'ApiError';

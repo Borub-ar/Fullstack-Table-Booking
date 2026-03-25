@@ -12,11 +12,10 @@ const VERIFYING_EMAIL_LABEL = 'Verifying your email...';
 const SOMETHING_WENT_WRONG_LABEL = 'Something went wrong, please request a new verification email';
 
 interface VerificationResponse {
-  success?: boolean;
   message: string;
 }
 
-const verificationRequests = new Map<string, Promise<VerificationResponse | undefined>>();
+const verificationRequests = new Map<string, Promise<VerificationResponse>>();
 
 const EmailVerificationResult = () => {
   const { verifyEmail, resendVerificationEmail, isLoading } = useUser();
@@ -33,24 +32,24 @@ const EmailVerificationResult = () => {
     if (!token) return;
 
     const verifyEmailFunction = async () => {
-      const request = verificationRequests.get(token) ?? verifyEmail(token);
-      verificationRequests.set(token, request);
+      try {
+        const request = verificationRequests.get(token) ?? verifyEmail(token);
+        verificationRequests.set(token, request);
+        const response = await request;
 
-      const response = await request;
-
-      if (!response) {
+        setResultLabel(response.message);
+        setIsError(false);
+      } catch (error: unknown) {
         verificationRequests.delete(token);
+        setIsError(true);
+
+        if (error instanceof Error) {
+          setResultLabel(error.message);
+          return;
+        }
+
         setResultLabel(SOMETHING_WENT_WRONG_LABEL);
-        setIsError(true);
-        return;
       }
-
-      if (!response.success) {
-        verificationRequests.delete(token);
-        setIsError(true);
-      }
-
-      setResultLabel(response.message);
     };
 
     verifyEmailFunction();
@@ -59,10 +58,17 @@ const EmailVerificationResult = () => {
   const handleRequestNewVerificationEmail = async () => {
     if (!token) return;
 
-    const response = await resendVerificationEmail(token);
-    if (!response) return;
+    try {
+      const response = await resendVerificationEmail(token);
+      showToast(response.message, 'success');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        showToast(error.message, 'error');
+        return;
+      }
 
-    showToast(response.message, response.success ? 'success' : 'error');
+      showToast(SOMETHING_WENT_WRONG_LABEL, 'error');
+    }
   };
 
   return (

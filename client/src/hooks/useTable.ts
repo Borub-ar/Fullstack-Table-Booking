@@ -11,6 +11,7 @@ const useTable = () => {
   return {
     tables: tablesQuery.data ?? [],
     isLoading: tablesQuery.isPending,
+    isError: tablesQuery.isError,
   };
 };
 

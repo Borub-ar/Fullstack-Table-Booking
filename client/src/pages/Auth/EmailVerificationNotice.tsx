@@ -17,10 +17,17 @@ const EmailVerificationNotice = () => {
   if (!email) return <Navigate to='/auth/login' replace />;
 
   const handleResendEmail = async () => {
-    const response = await sendVerificationEmail(email);
-    if (!response) return;
+    try {
+      const response = await sendVerificationEmail(email);
+      showToast(response.message, 'success');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        showToast(error.message, 'error');
+        return;
+      }
 
-    showToast(response.message, response.success ? 'success' : 'error');
+      showToast('Unknown error', 'error');
+    }
   };
 
   return (
